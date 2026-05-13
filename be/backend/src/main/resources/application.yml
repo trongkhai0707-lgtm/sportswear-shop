@@ -2,7 +2,7 @@ spring:
   application:
     name: sportswear-app
   datasource:
-    url: jdbc:mysql://localhost:3306/sportswear_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    url: jdbc:mysql://localhost:3306/sportswear_shop_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

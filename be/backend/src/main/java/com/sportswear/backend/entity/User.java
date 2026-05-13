@@ -43,9 +43,30 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // Hàm hỗ trợ để thêm Role dễ dàng hơn
+    // Helper method
     public void addRole(Role role) {
         this.roles.add(role);
         role.getUsers().add(this);
+    }
+
+    // ==================== QUAN HỆ VỚI CART ====================
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
+
+    // Helper method
+    public Cart getOrCreateCart() {
+        if (this.cart == null) {
+            this.cart = Cart.builder().user(this).build();
+        }
+        return this.cart;
+    }
+
+    // ==================== QUAN HỆ VỚI ORDER ====================
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<>();
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        order.setUser(this);
     }
 }
