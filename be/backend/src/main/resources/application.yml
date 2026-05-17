@@ -10,10 +10,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
 
   devtools:
     restart:
@@ -23,11 +23,9 @@ server:
   port: 8080
 
 # JWT Config
-jwt:
-  secret: yourSuperSecretKeyForSportwearApp2026ChangeThisInProduction!!!
-  expiration: 86400000   # 24 hours in milliseconds
-  refresh-expiration: 604800000  # 7 days
-
-# App config
 app:
+  jwt:
+    secret: yourSuperSecretKeyForSportwearApp2026ChangeThisInProduction!!!
+    expiration: 86400000        # 24 hours in milliseconds
+    refresh-expiration: 604800000  # 7 days
   frontend-url: http://localhost:3000
