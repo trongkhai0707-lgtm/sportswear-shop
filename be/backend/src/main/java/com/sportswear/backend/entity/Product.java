@@ -31,7 +31,7 @@ public class Product {
     @Column(length = 100)
     private String brand;
     @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
+    private boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

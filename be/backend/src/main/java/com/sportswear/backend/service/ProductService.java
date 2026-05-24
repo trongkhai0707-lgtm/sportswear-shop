@@ -28,6 +28,13 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    public List<ProductResponse> getAllProductsForAdmin() {
+        return productRepository.findAll().stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public ProductResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
@@ -45,14 +52,41 @@ public class ProductService {
                 .slug(generateSlug(request.getName()))
                 .description(request.getDescription())
                 .brand(request.getBrand())
-                .isActive(request.isActive())
-                .category(category)                    // ← Quan trọng
+                .active(request.isActive())
+                .category(category)
                 .build();
 
         Product savedProduct = productRepository.save(product);
         return convertToResponse(savedProduct);
     }
+    // THÊM MỚI - Cập nhật sản phẩm
+    @Transactional
+    public ProductResponse updateProduct(Long id, ProductRequest request) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
 
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với ID: " + request.getCategoryId()));
+
+        product.setName(request.getName());
+        product.setSlug(generateSlug(request.getName()));
+        product.setDescription(request.getDescription());
+        product.setBrand(request.getBrand());
+        product.setActive(request.isActive());
+        product.setCategory(category);
+
+        return convertToResponse(productRepository.save(product));
+    }
+
+    // THÊM MỚI - Xoá mềm
+    @Transactional
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
+
+        product.setActive(false);
+        productRepository.save(product);
+    }
     private ProductResponse convertToResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())

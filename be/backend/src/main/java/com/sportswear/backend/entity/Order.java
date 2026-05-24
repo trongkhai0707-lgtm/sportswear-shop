@@ -1,5 +1,7 @@
 package com.sportswear.backend.entity;
 
+import com.sportswear.backend.converter.ShippingInfoConverter;
+import com.sportswear.backend.dto.order.ShippingInfo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,7 +34,8 @@ public class Order {
     private BigDecimal totalAmount;
 
     @Column(name = "shipping_info", columnDefinition = "JSON")
-    private String shippingInfo;           // Lưu dưới dạng JSON string
+    @Convert(converter = ShippingInfoConverter.class)
+    private ShippingInfo shippingInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_status_id", nullable = false)

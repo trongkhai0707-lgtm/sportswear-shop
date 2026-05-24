@@ -69,7 +69,7 @@ public class AuthService {
                 .fullName(user.getFullName())
                 .build();
     }
-
+    @Transactional
     public AuthResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsernameOrEmail(), request.getPassword())

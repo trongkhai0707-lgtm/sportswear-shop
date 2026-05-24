@@ -17,14 +17,14 @@ public class ProductRequest {
 
     private String description;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Giá không được để trống")
+    @Positive(message = "Giá phải lớn hơn 0")
     private BigDecimal price;
 
     private BigDecimal salePrice;
 
     @NotNull
-    @PositiveOrZero
+    @PositiveOrZero(message = "Tồn kho phải >= 0")
     private Integer stockQuantity;
 
     @NotNull(message = "Danh mục là bắt buộc")
@@ -32,6 +32,9 @@ public class ProductRequest {
 
     private String brand;
     private String gender;
+    private String imageUrl;
+    private String size;
+    private String color;
     private boolean featured = false;
     private boolean active = true;
 }

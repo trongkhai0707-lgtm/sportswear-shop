@@ -24,7 +24,7 @@ public class ProductVariant {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER) // Eager để khi lấy variant là có luôn thông tin size
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "size_id", nullable = false)
     private Size size;
 
