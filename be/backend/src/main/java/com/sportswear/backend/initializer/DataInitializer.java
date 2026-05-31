@@ -21,6 +21,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PaymentMethodRepository paymentMethodRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final SizeRepository sizeRepository;
+    private final BrandRepository brandRepository;
 
     @Override
     @Transactional
@@ -32,6 +33,7 @@ public class DataInitializer implements CommandLineRunner {
         initOrderStatuses();
         initPaymentMethods();
         initPaymentStatuses();
+        initBrands();
 
         log.info("Hoàn thành khởi tạo tất cả dữ liệu mặc định.");
     }
@@ -119,5 +121,26 @@ public class DataInitializer implements CommandLineRunner {
                 log.info("Đã tạo PaymentStatus: {}", status);
             }
         }
+    }
+
+    private void initBrands() {
+        List<String> defaultBrands = Arrays.asList(
+                "Nike", "Adidas", "Puma", "Under Armour", "Reebok"
+        );
+        int count = 0;
+        for (String brandName : defaultBrands) {
+            if (brandRepository.findAll().stream()
+                    .noneMatch(b -> b.getName().equals(brandName))) {
+                Brand brand = Brand.builder()
+                        .name(brandName)
+                        .description("Thương hiệu " + brandName)
+                        .active(true)
+                        .build();
+                brandRepository.save(brand);
+                count++;
+                log.info("Đã tạo Brand: {}", brandName);
+            }
+        }
+        log.info("Hoàn thành Brands - Đã tạo mới: {}", count);
     }
 }

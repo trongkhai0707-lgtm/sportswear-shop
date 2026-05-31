@@ -78,7 +78,7 @@ public class ProductService {
         return convertToResponse(productRepository.save(product));
     }
 
-    // THÊM MỚI - Xoá mềm
+    // THÊM MỚI - Xoá
     @Transactional
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
@@ -100,6 +100,14 @@ public class ProductService {
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductResponse> searchProducts(String keyword) {
+        return productRepository.findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 
     private String generateSlug(String name) {

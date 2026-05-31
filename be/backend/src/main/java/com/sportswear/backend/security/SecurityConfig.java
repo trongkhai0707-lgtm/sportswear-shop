@@ -57,10 +57,10 @@ public class SecurityConfig {
                         // Yêu cầu đăng nhập
                         .requestMatchers("/api/v1/cart/**").authenticated()
                         .requestMatchers("/api/v1/orders/**").authenticated()
-                        .requestMatchers("/api/v1/users/profile/**").authenticated()
+                        .requestMatchers("/api/v1/users/**").authenticated()
 
                         // Chỉ Admin mới vào được
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")   // hoặc "CUSTOMER" nếu bạn dùng ROLE_CUSTOMER
+                        .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")   // hoặc "CUSTOMER" nếu bạn dùng ROLE_CUSTOMER
 
                         .anyRequest().authenticated()
                 )
