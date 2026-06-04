@@ -13,6 +13,7 @@ import com.sportswear.backend.repository.CartRepository;
 import com.sportswear.backend.repository.ProductRepository;
 import com.sportswear.backend.repository.ProductVariantRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartService {
@@ -31,6 +33,9 @@ public class CartService {
     @Transactional
     public CartResponse addToCart(CartItemRequest request) {
         User currentUser = userService.getCurrentUser();
+        log.info("Adding to cart - user: {}, productId: {}, variantId: {}, qty: {}",
+                currentUser.getUsername(), request.getProductId(), request.getVariantId(), request.getQuantity());
+
         Cart cart = getOrCreateCart(currentUser);
 
         Product product = productRepository.findById(request.getProductId())
@@ -39,16 +44,17 @@ public class CartService {
         ProductVariant variant = variantRepository.findById(request.getVariantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Variant not found"));
 
-        // Đảm bảo variant thuộc product được chọn
         if (!variant.getProduct().getId().equals(product.getId())) {
+            log.warn("Variant id: {} does not belong to product id: {}", variant.getId(), product.getId());
             throw new IllegalArgumentException("Variant does not belong to this product");
         }
 
         if (variant.getStock() < request.getQuantity()) {
+            log.warn("Insufficient stock - variantId: {}, requested: {}, available: {}",
+                    variant.getId(), request.getQuantity(), variant.getStock());
             throw new IllegalArgumentException("Not enough stock");
         }
 
-        // Tìm item đã tồn tại theo variantId
         CartItem existingItem = cart.getCartItems().stream()
                 .filter(item -> item.getVariant().getId().equals(variant.getId()))
                 .findFirst()
@@ -56,19 +62,22 @@ public class CartService {
 
         if (existingItem != null) {
             int newQuantity = existingItem.getQuantity() + request.getQuantity();
-            // Kiểm tra lại stock sau khi cộng thêm
             if (variant.getStock() < newQuantity) {
+                log.warn("Insufficient stock after update - variantId: {}, requested total: {}, available: {}",
+                        variant.getId(), newQuantity, variant.getStock());
                 throw new IllegalArgumentException("Not enough stock");
             }
             existingItem.setQuantity(newQuantity);
+            log.debug("Updated existing cart item - variantId: {}, newQty: {}", variant.getId(), newQuantity);
         } else {
             CartItem newItem = new CartItem();
             newItem.setCart(cart);
             newItem.setProduct(product);
             newItem.setVariant(variant);
             newItem.setQuantity(request.getQuantity());
-            newItem.setPriceAtTime(variant.getPrice()); // lưu giá tại thời điểm thêm vào giỏ
+            newItem.setPriceAtTime(variant.getPrice());
             cart.getCartItems().add(newItem);
+            log.debug("Added new cart item - productId: {}, variantId: {}", product.getId(), variant.getId());
         }
 
         return mapToResponse(cartRepository.save(cart));
@@ -77,6 +86,7 @@ public class CartService {
     @Transactional(readOnly = true)
     public CartResponse getCart() {
         User currentUser = userService.getCurrentUser();
+        log.debug("Fetching cart for user: {}", currentUser.getUsername());
         Cart cart = cartRepository.findByUserId(currentUser.getId())
                 .orElseGet(() -> createNewCart(currentUser));
         return mapToResponse(cart);
@@ -85,6 +95,8 @@ public class CartService {
     @Transactional
     public CartResponse updateCartItem(Long itemId, int quantity) {
         User currentUser = userService.getCurrentUser();
+        log.info("Updating cart item - itemId: {}, newQty: {}, user: {}", itemId, quantity, currentUser.getUsername());
+
         Cart cart = getCartByUser(currentUser);
 
         CartItem item = cart.getCartItems().stream()
@@ -93,10 +105,12 @@ public class CartService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cart item not found"));
 
         if (quantity <= 0) {
+            log.debug("Removing cart item id: {} (qty <= 0)", itemId);
             cart.getCartItems().remove(item);
         } else {
-            // Kiểm tra stock trước khi update
             if (item.getVariant().getStock() < quantity) {
+                log.warn("Insufficient stock on update - itemId: {}, requested: {}, available: {}",
+                        itemId, quantity, item.getVariant().getStock());
                 throw new IllegalArgumentException("Not enough stock");
             }
             item.setQuantity(quantity);
@@ -108,6 +122,8 @@ public class CartService {
     @Transactional
     public CartResponse removeFromCart(Long itemId) {
         User currentUser = userService.getCurrentUser();
+        log.info("Removing cart item - itemId: {}, user: {}", itemId, currentUser.getUsername());
+
         Cart cart = getCartByUser(currentUser);
         cart.getCartItems().removeIf(item -> item.getId().equals(itemId));
         return mapToResponse(cartRepository.save(cart));
@@ -121,6 +137,7 @@ public class CartService {
     }
 
     private Cart createNewCart(User user) {
+        log.debug("Creating new cart for user: {}", user.getUsername());
         Cart cart = new Cart();
         cart.setUser(user);
         return cartRepository.save(cart);

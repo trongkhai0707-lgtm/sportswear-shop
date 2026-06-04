@@ -5,6 +5,7 @@ import com.sportswear.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class DataInitializer implements CommandLineRunner {
     private final PaymentStatusRepository paymentStatusRepository;
     private final SizeRepository sizeRepository;
     private final BrandRepository brandRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -34,6 +37,7 @@ public class DataInitializer implements CommandLineRunner {
         initPaymentMethods();
         initPaymentStatuses();
         initBrands();
+        initAdminUser();
 
         log.info("Hoàn thành khởi tạo tất cả dữ liệu mặc định.");
     }
@@ -41,7 +45,6 @@ public class DataInitializer implements CommandLineRunner {
     private void initRoles() {
         List<String> defaultRoles = Arrays.asList("ROLE_CUSTOMER", "ROLE_ADMIN", "ROLE_STAFF");
         int count = 0;
-
         for (String roleName : defaultRoles) {
             if (roleRepository.findByName(roleName).isEmpty()) {
                 Role role = Role.builder()
@@ -58,7 +61,6 @@ public class DataInitializer implements CommandLineRunner {
 
     private void initSizes() {
         List<String> defaultSizes = Arrays.asList("S", "M", "L", "XL", "XXL", "FreeSize");
-
         int count = 0;
         for (String sizeName : defaultSizes) {
             if (sizeRepository.findByName(sizeName).isEmpty()) {
@@ -66,7 +68,6 @@ public class DataInitializer implements CommandLineRunner {
                         .name(sizeName)
                         .description("Kích cỡ " + sizeName)
                         .build();
-
                 sizeRepository.save(size);
                 count++;
                 log.info("Đã tạo Size: {}", sizeName);
@@ -80,7 +81,7 @@ public class DataInitializer implements CommandLineRunner {
                 "PENDING", "CONFIRMED", "PROCESSING",
                 "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"
         );
-
+        int count = 0;
         for (String status : statuses) {
             if (orderStatusRepository.findByName(status).isEmpty()) {
                 OrderStatus os = OrderStatus.builder()
@@ -88,14 +89,16 @@ public class DataInitializer implements CommandLineRunner {
                         .description("Trạng thái đơn hàng: " + status)
                         .build();
                 orderStatusRepository.save(os);
+                count++;
                 log.info("Đã tạo OrderStatus: {}", status);
             }
         }
+        log.info("Hoàn thành OrderStatuses - Đã tạo mới: {}", count);
     }
 
     private void initPaymentMethods() {
         List<String> methods = Arrays.asList("COD", "MOMO", "VNPAY", "BANK_TRANSFER");
-
+        int count = 0;
         for (String method : methods) {
             if (paymentMethodRepository.findByName(method).isEmpty()) {
                 PaymentMethod pm = PaymentMethod.builder()
@@ -103,14 +106,16 @@ public class DataInitializer implements CommandLineRunner {
                         .description("Phương thức thanh toán: " + method)
                         .build();
                 paymentMethodRepository.save(pm);
+                count++;
                 log.info("Đã tạo PaymentMethod: {}", method);
             }
         }
+        log.info("Hoàn thành PaymentMethods - Đã tạo mới: {}", count);
     }
 
     private void initPaymentStatuses() {
         List<String> statuses = Arrays.asList("PENDING", "PAID", "FAILED", "REFUNDED");
-
+        int count = 0;
         for (String status : statuses) {
             if (paymentStatusRepository.findByName(status).isEmpty()) {
                 PaymentStatus ps = PaymentStatus.builder()
@@ -118,9 +123,11 @@ public class DataInitializer implements CommandLineRunner {
                         .description("Trạng thái thanh toán: " + status)
                         .build();
                 paymentStatusRepository.save(ps);
+                count++;
                 log.info("Đã tạo PaymentStatus: {}", status);
             }
         }
+        log.info("Hoàn thành PaymentStatuses - Đã tạo mới: {}", count);
     }
 
     private void initBrands() {
@@ -129,8 +136,7 @@ public class DataInitializer implements CommandLineRunner {
         );
         int count = 0;
         for (String brandName : defaultBrands) {
-            if (brandRepository.findAll().stream()
-                    .noneMatch(b -> b.getName().equals(brandName))) {
+            if (brandRepository.findByName(brandName).isEmpty()) {
                 Brand brand = Brand.builder()
                         .name(brandName)
                         .description("Thương hiệu " + brandName)
@@ -142,5 +148,32 @@ public class DataInitializer implements CommandLineRunner {
             }
         }
         log.info("Hoàn thành Brands - Đã tạo mới: {}", count);
+    }
+
+    private void initAdminUser() {
+        if (userRepository.findByUsername("admin").isPresent()) {
+            log.info("Tài khoản admin đã tồn tại, bỏ qua.");
+            return;
+        }
+
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN")
+                .orElseThrow(() -> new RuntimeException("ROLE_ADMIN chưa được khởi tạo"));
+
+        User admin = User.builder()
+                .username("admin")
+                .email("admin@sportswear.com")
+                .password(passwordEncoder.encode("Admin@123456"))
+                .fullName("System Admin")
+                .enabled(true)
+                .build();
+
+        admin.addRole(adminRole);
+        userRepository.save(admin);
+        log.info("========================================");
+        log.info("Đã tạo tài khoản ADMIN mặc định:");
+        log.info("  Username : admin");
+        log.info("  Password : Admin@123456");
+        log.info("  !! Hãy đổi mật khẩu sau khi đăng nhập lần đầu !!");
+        log.info("========================================");
     }
 }

@@ -24,69 +24,80 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
-                          CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // CORS Configuration
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-                // Disable CSRF vì dùng JWT + Stateless
                 .csrf(csrf -> csrf.disable())
-
-                // Session stateless
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        // Public APIs
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/products/**").permitAll()
-                        .requestMatchers("/api/v1/categories/**").permitAll()
-                        .requestMatchers("/api/v1/brands/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
 
-                        // Yêu cầu đăng nhập
+                        // ── Auth endpoints ──────────────────────────────────
+                        .requestMatchers(
+                                "/api/v1/auth/register",
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/refresh",
+                                "/api/v1/auth/logout"
+                        ).permitAll()
+                        .requestMatchers("/api/v1/auth/me").authenticated()
+
+                        // ── Public read endpoints ────────────────────────────
+                        .requestMatchers(
+                                "/api/v1/products",
+                                "/api/v1/products/**",
+                                "/api/v1/categories",
+                                "/api/v1/categories/**",
+                                "/api/v1/brands",
+                                "/api/v1/brands/**",
+                                "/api/v1/sizes",
+                                "/api/v1/sizes/**",
+                                "/api/v1/payment-methods",
+                                "/api/v1/payment-methods/**"
+                        ).permitAll()
+
+                        // ── Swagger ──────────────────────────────────────────
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**"
+                        ).permitAll()
+
+                        // ── Authenticated user endpoints ─────────────────────
                         .requestMatchers("/api/v1/cart/**").authenticated()
                         .requestMatchers("/api/v1/orders/**").authenticated()
                         .requestMatchers("/api/v1/users/**").authenticated()
 
-                        // Chỉ Admin mới vào được
-                        .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")   // hoặc "CUSTOMER" nếu bạn dùng ROLE_CUSTOMER
+                        // ── Admin only ───────────────────────────────────────
+                        .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
 
                         .anyRequest().authenticated()
                 )
-
-                // Thêm JWT Filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // ==================== CORS Configuration ====================
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // Phù hợp với CRA
         configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
                 "http://127.0.0.1:3000",
-                "http://localhost:3001"
+                "http://localhost:3001",
+                "http://localhost:5173"
         ));
-
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

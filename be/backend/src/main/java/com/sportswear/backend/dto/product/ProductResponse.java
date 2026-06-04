@@ -2,7 +2,6 @@ package com.sportswear.backend.dto.product;
 
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,6 +15,7 @@ public class ProductResponse {
     private String slug;
     private String description;
     private String brand;
+    private String imageUrl;
     private boolean active;
     private Long categoryId;
     private String categoryName;

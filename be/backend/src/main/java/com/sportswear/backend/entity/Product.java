@@ -30,6 +30,10 @@ public class Product {
 
     @Column(length = 100)
     private String brand;
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
     @Column(name = "is_active", nullable = false)
     private boolean active = true;
 

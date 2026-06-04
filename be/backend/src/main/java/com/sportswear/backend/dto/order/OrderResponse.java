@@ -1,11 +1,9 @@
 package com.sportswear.backend.dto.order;
 
-import com.sportswear.backend.entity.OrderStatus;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import com.sportswear.backend.dto.order.ShippingInfo;
 
 @Data
 public class OrderResponse {
@@ -13,7 +11,8 @@ public class OrderResponse {
     private String status;
     private BigDecimal totalAmount;
     private ShippingInfo shippingInfo;
+    private String paymentMethod;
+    private String paymentStatus;
     private LocalDateTime createdAt;
     private List<OrderItemDto> items;
 }
-

@@ -1,15 +1,13 @@
 package com.sportswear.backend.dto.product;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
 public class ProductVariantRequest {
     @NotBlank(message = "Màu sắc không được trống")
+    @Size(max = 50, message = "Tên màu không được vượt quá 50 ký tự")
     private String color;
 
     @NotNull(message = "Size không được trống")

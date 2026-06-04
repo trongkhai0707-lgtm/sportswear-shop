@@ -12,6 +12,7 @@ import com.sportswear.backend.repository.RoleRepository;
 import com.sportswear.backend.repository.UserRepository;
 import com.sportswear.backend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -35,10 +37,14 @@ public class AuthService {
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
+        log.info("Registering new user with username: {}", request.getUsername());
+
         if (userRepository.existsByUsername(request.getUsername())) {
+            log.warn("Registration failed - username already exists: {}", request.getUsername());
             throw new RuntimeException("Username đã tồn tại");
         }
         if (userRepository.existsByEmail(request.getEmail())) {
+            log.warn("Registration failed - email already exists: {}", request.getEmail());
             throw new RuntimeException("Email đã tồn tại");
         }
 
@@ -58,6 +64,8 @@ public class AuthService {
         user.addRole(customerRole);
         user = userRepository.save(user);
 
+        log.info("User registered successfully: {}", user.getUsername());
+
         String accessToken = jwtTokenProvider.generateToken(user.getUsername(), customerRole.getName());
         String refreshTokenStr = createRefreshToken(user);
 
@@ -69,8 +77,11 @@ public class AuthService {
                 .fullName(user.getFullName())
                 .build();
     }
+
     @Transactional
     public AuthResponse login(LoginRequest request) {
+        log.info("Login attempt for: {}", request.getUsernameOrEmail());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsernameOrEmail(), request.getPassword())
         );
@@ -78,6 +89,8 @@ public class AuthService {
         User user = (User) authentication.getPrincipal();
         String role = user.getRoles().stream().findFirst()
                 .map(Role::getName).orElse("ROLE_CUSTOMER");
+
+        log.info("Login successful for user: {}, role: {}", user.getUsername(), role);
 
         String accessToken = jwtTokenProvider.generateToken(user.getUsername(), role);
         String refreshTokenStr = createRefreshToken(user);
@@ -93,16 +106,23 @@ public class AuthService {
 
     @Transactional
     public AuthResponse refreshToken(RefreshTokenRequest request) {
+        log.debug("Refreshing access token");
+
         RefreshToken refreshToken = refreshTokenRepository.findByToken(request.getRefreshToken())
                 .orElseThrow(() -> new RuntimeException("Refresh token không hợp lệ"));
 
         if (refreshToken.isRevoked() || refreshToken.getExpiryDate().isBefore(Instant.now())) {
+            log.warn("Refresh token expired or revoked for user: {}", refreshToken.getUser().getUsername());
+            // Delete expired token to keep DB clean
+            refreshTokenRepository.delete(refreshToken);
             throw new RuntimeException("Refresh token đã hết hạn hoặc bị thu hồi");
         }
 
         User user = refreshToken.getUser();
         String role = user.getRoles().stream().findFirst()
                 .map(Role::getName).orElse("ROLE_CUSTOMER");
+
+        log.info("Token refreshed successfully for user: {}", user.getUsername());
 
         String newAccessToken = jwtTokenProvider.generateToken(user.getUsername(), role);
 
@@ -113,6 +133,15 @@ public class AuthService {
                 .role(role)
                 .fullName(user.getFullName())
                 .build();
+    }
+
+    @Transactional
+    public void logout(String refreshTokenStr) {
+        refreshTokenRepository.findByToken(refreshTokenStr)
+                .ifPresent(rt -> {
+                    log.info("Logout - revoking refresh token for user: {}", rt.getUser().getUsername());
+                    refreshTokenRepository.delete(rt);
+                });
     }
 
     private String createRefreshToken(User user) {
@@ -126,6 +155,7 @@ public class AuthService {
                 .build();
 
         refreshTokenRepository.save(refreshToken);
+        log.debug("Refresh token created for user: {}", user.getUsername());
         return token;
     }
 }
