@@ -49,6 +49,7 @@ public class SecurityConfig {
 
                         // ── Public read endpoints ────────────────────────────
                         .requestMatchers(
+                                "/images/**",
                                 "/api/v1/products",
                                 "/api/v1/products/**",
                                 "/api/v1/categories",
