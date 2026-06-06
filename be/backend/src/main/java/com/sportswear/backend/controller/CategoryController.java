@@ -29,9 +29,16 @@ public class CategoryController {
     }
 
     @Operation(summary = "Lấy chi tiết danh mục theo ID")
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
         log.debug("Lấy chi tiết danh mục id: {}", id);
         return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
+
+    @Operation(summary = "Lấy chi tiết danh mục theo slug")
+    @GetMapping("/slug/{slug}")
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable String slug) {
+        log.debug("Lấy chi tiết danh mục slug: {}", slug);
+        return ResponseEntity.ok(categoryService.getCategoryBySlug(slug));
     }
 }

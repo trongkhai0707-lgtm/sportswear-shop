@@ -40,6 +40,14 @@ public class CategoryService {
         return convertToResponse(category);
     }
 
+    // Lấy danh mục theo ID
+    @Transactional(readOnly = true)
+    public CategoryResponse getCategoryBySlug(String slug) {
+        Category category = categoryRepository.findBySlug(slug)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục với Slug: " + slug));
+        return convertToResponse(category);
+    }
+
     // Tạo danh mục mới
     @Transactional
     public CategoryResponse createCategory(CategoryRequest request) {

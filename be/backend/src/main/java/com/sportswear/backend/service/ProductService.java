@@ -35,6 +35,24 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    public List<ProductResponse> getProductsByCategoryId(Long categoryId) {
+        log.debug("Fetching products by categoryId: {}", categoryId);
+        return productRepository.findByCategoryIdAndActiveTrue(categoryId).stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductResponse> getProductsByCategorySlug(String categorySlug) {
+        log.debug("Fetching products by categorySlug: {}", categorySlug);
+        Category category = categoryRepository.findBySlug(categorySlug)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy danh mục với slug: " + categorySlug));
+        return productRepository.findByCategoryIdAndActiveTrue(category.getId()).stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<ProductResponse> getAllProductsForAdmin() {
         log.debug("Admin fetching all products");
         return productRepository.findAll().stream()

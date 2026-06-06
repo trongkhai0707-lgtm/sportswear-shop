@@ -36,6 +36,26 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+    @Operation(summary = "Lấy tất cả sản phẩm theo danh mục")
+    @ApiResponse(responseCode = "200", description = "Danh sách sản phẩm")
+    @GetMapping("/category/id/{categoryId}")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategoryId(
+            @Parameter(description = "ID danh mục")
+            @PathVariable Long categoryId) {
+        log.info("Fetching products by categoryId: {}", categoryId);
+        return ResponseEntity.ok(productService.getProductsByCategoryId(categoryId));
+    }
+
+    @Operation(summary = "Lấy tất cả sản phẩm theo danh mục")
+    @ApiResponse(responseCode = "200", description = "Danh sách sản phẩm")
+    @GetMapping("/category/slug/{categorySlug}")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategorySlug(
+            @Parameter(description = "ID danh mục")
+            @PathVariable String categorySlug) {
+        log.info("Fetching products by categorySlug: {}", categorySlug);
+        return ResponseEntity.ok(productService.getProductsByCategorySlug(categorySlug));
+    }
+
     @Operation(summary = "Lấy chi tiết sản phẩm theo ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Chi tiết sản phẩm"),
