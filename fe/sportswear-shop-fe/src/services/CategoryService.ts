@@ -18,6 +18,8 @@ export const fetchCategories = async (): Promise<Category[]> => {
 };
 
 export const fetchCategoryBySlug = async (slug: string): Promise<Category> => {
-  const response = await axios.get<Category>(`${CATEGORIES_API_URL}/slug/${slug}`);
+  const response = await axios.get<Category>(
+    `${CATEGORIES_API_URL}/slug/${slug}`,
+  );
   return response.data;
 };

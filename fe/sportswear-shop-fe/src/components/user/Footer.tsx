@@ -7,7 +7,8 @@ export default function Footer() {
         <div className="space-y-4 lg:w-1/3">
           <div className="text-2xl font-bold text-red-600">Sportswear</div>
           <p className="max-w-md text-sm text-gray-600">
-            Cửa hàng đồ thể thao chuyên nghiệp với sản phẩm chất lượng, giao hàng nhanh và dịch vụ khách hàng tận tâm.
+            Cửa hàng đồ thể thao chuyên nghiệp với sản phẩm chất lượng, giao
+            hàng nhanh và dịch vụ khách hàng tận tâm.
           </p>
         </div>
 
@@ -41,7 +42,10 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-gray-600">
               <li>
-                <a href="mailto:support@sportswear.com" className="hover:text-red-600">
+                <a
+                  href="mailto:support@sportswear.com"
+                  className="hover:text-red-600"
+                >
                   support@sportswear.com
                 </a>
               </li>

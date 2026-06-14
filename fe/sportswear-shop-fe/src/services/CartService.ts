@@ -16,6 +16,7 @@ export interface CartItem {
   price: number;
   quantity: number;
   subtotal: number;
+  imageUrl: string | null;
 }
 
 export interface CartDetailResponse {
@@ -46,24 +47,23 @@ export interface AddToCartRequest {
   quantity: number;
 }
 
-export const fetchCartDetails = async (): Promise<CartDetailResponse | null> => {
-  const token = getAccessToken();
-  if (!token) {
-    return null;
-  }
+export const fetchCartDetails =
+  async (): Promise<CartDetailResponse | null> => {
+    const token = getAccessToken();
+    if (!token) {
+      return null;
+    }
 
-  const response = await axios.get<CartDetailResponse>(CART_API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await axios.get<CartDetailResponse>(CART_API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  return response.data;
-};
+    return response.data;
+  };
 
-export const addToCart = async (
-  payload: AddToCartRequest
-): Promise<void> => {
+export const addToCart = async (payload: AddToCartRequest): Promise<void> => {
   const token = getAccessToken();
   if (!token) {
     throw new Error("Không có token đăng nhập.");
@@ -78,7 +78,7 @@ export const addToCart = async (
 
 export const updateCartItem = async (
   itemId: number,
-  quantity: number
+  quantity: number,
 ): Promise<void> => {
   const token = getAccessToken();
   if (!token) {
@@ -93,7 +93,7 @@ export const updateCartItem = async (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 };
 

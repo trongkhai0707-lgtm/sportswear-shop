@@ -159,6 +159,7 @@ public class CartService {
             dto.setProductName(item.getProduct().getName());
             dto.setColor(item.getVariant().getColor());
             dto.setSizeName(item.getVariant().getSize().getName());
+            dto.setImageUrl(item.getProduct().getImageUrl());
             dto.setPrice(item.getPriceAtTime());
             dto.setQuantity(item.getQuantity());
             dto.setSubtotal(

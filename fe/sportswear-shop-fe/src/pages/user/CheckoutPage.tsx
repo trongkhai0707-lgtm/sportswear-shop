@@ -1,6 +1,9 @@
 import { useEffect, useState, type FormEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCartDetails, type CartDetailResponse } from "../../services/CartService";
+import {
+  fetchCartDetails,
+  type CartDetailResponse,
+} from "../../services/CartService";
 import { getAccessToken } from "../../services/AuthService";
 import { fetchUserProfile } from "../../services/UserService";
 import {
@@ -23,7 +26,9 @@ export default function CheckoutPage() {
     address: "",
     note: "",
   });
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<number | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     const load = async () => {
@@ -93,20 +98,9 @@ export default function CheckoutPage() {
         paymentMethodId: selectedPaymentMethod || 0,
       };
       console.log("Checkout payload:", payload);
-      await submitCheckout(payload);
-      // Redirect to success page or show success message
-      navigate("/");
-    } catch (err) {
-      console.error("Checkout error:", err);
-      if (err instanceof Error) {
-        console.error("Error message:", err.message);
-      }
-      // Log axios error response if available
-      if (err && typeof err === 'object' && 'response' in err) {
-        const axiosErr = err as { response?: { status: number; data: unknown } };
-        console.error("Error response status:", axiosErr.response?.status);
-        console.error("Error response data:", axiosErr.response?.data);
-      }
+      const orderId = await submitCheckout(payload);
+      navigate(`/dat-hang-thanh-cong?orderId=${orderId}`);
+    } catch {
       setError("Thanh toán thất bại. Vui lòng thử lại.");
     } finally {
       setSubmitting(false);
@@ -174,7 +168,9 @@ export default function CheckoutPage() {
           <form onSubmit={handleSubmit} className="flex-1 space-y-6">
             {/* User Info */}
             <div className="rounded-lg border bg-white p-6">
-              <h3 className="mb-4 text-lg font-semibold">Thông tin giao hàng</h3>
+              <h3 className="mb-4 text-lg font-semibold">
+                Thông tin giao hàng
+              </h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -183,7 +179,9 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     value={formData.fullName}
-                    onChange={(e) => handleFormChange("fullName", e.target.value)}
+                    onChange={(e) =>
+                      handleFormChange("fullName", e.target.value)
+                    }
                     required
                     className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
                   />
@@ -207,7 +205,9 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     value={formData.address}
-                    onChange={(e) => handleFormChange("address", e.target.value)}
+                    onChange={(e) =>
+                      handleFormChange("address", e.target.value)
+                    }
                     required
                     className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
                   />
@@ -228,10 +228,15 @@ export default function CheckoutPage() {
 
             {/* Payment Method */}
             <div className="rounded-lg border bg-white p-6">
-              <h3 className="mb-4 text-lg font-semibold">Phương thức thanh toán</h3>
+              <h3 className="mb-4 text-lg font-semibold">
+                Phương thức thanh toán
+              </h3>
               <div className="space-y-2">
                 {paymentMethods.map((method) => (
-                  <label key={method.id} className="flex items-center gap-3 rounded border p-3 cursor-pointer hover:bg-gray-50">
+                  <label
+                    key={method.id}
+                    className="flex items-center gap-3 rounded border p-3 cursor-pointer hover:bg-gray-50"
+                  >
                     <input
                       type="radio"
                       name="payment"
@@ -242,7 +247,9 @@ export default function CheckoutPage() {
                     />
                     <div>
                       <div className="font-medium">{method.name}</div>
-                      <div className="text-sm text-gray-500">{method.description}</div>
+                      <div className="text-sm text-gray-500">
+                        {method.description}
+                      </div>
                     </div>
                   </label>
                 ))}
@@ -265,14 +272,19 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 border-b pb-4">
                 {cart.items.map((item) => (
-                  <div key={item.itemId} className="flex justify-between text-sm">
+                  <div
+                    key={item.itemId}
+                    className="flex justify-between text-sm"
+                  >
                     <div>
                       <div className="font-medium">{item.productName}</div>
-                      <div className="text-gray-500">{item.color} - {item.sizeName}</div>
+                      <div className="text-gray-500">
+                        {item.color} - {item.sizeName}
+                      </div>
                       <div className="text-gray-500">x{item.quantity}</div>
                     </div>
                     <div className="text-right font-medium">
-                      {item.subtotal.toLocaleString('vi-VN')}đ
+                      {item.subtotal.toLocaleString("vi-VN")}đ
                     </div>
                   </div>
                 ))}
@@ -281,7 +293,9 @@ export default function CheckoutPage() {
               <div className="space-y-3 py-4 border-b">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Tạm tính</span>
-                  <span className="font-medium">{cart.totalAmount.toLocaleString('vi-VN')}đ</span>
+                  <span className="font-medium">
+                    {cart.totalAmount.toLocaleString("vi-VN")}đ
+                  </span>
                 </div>
               </div>
 
@@ -289,7 +303,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between">
                   <span className="font-semibold">Tổng cộng</span>
                   <span className="text-2xl font-bold text-red-600">
-                    {cart.totalAmount.toLocaleString('vi-VN')}đ
+                    {cart.totalAmount.toLocaleString("vi-VN")}đ
                   </span>
                 </div>
               </div>

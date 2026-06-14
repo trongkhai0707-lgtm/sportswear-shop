@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b520974e-34b0-44ab-a5c9-58980605409d" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3CGBhp6F5rZLZqzAEg7Is1ls8BR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;K:/sportswear-shop/be&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.sportswear.backend.BackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b520974e-34b0-44ab-a5c9-58980605409d" name="Changes" comment="" />
+      <created>1776002147970</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776002147970</updated>
+      <workItem from="1776002149405" duration="935000" />
+      <workItem from="1776003444666" duration="217000" />
+      <workItem from="1776083418901" duration="930000" />
+      <workItem from="1776085518497" duration="489000" />
+      <workItem from="1776086162647" duration="319000" />
+      <workItem from="1776688482014" duration="2674000" />
+      <workItem from="1776760782117" duration="2088000" />
+      <workItem from="1776769740289" duration="1198000" />
+      <workItem from="1776828348394" duration="2854000" />
+      <workItem from="1776931841464" duration="613000" />
+      <workItem from="1777384158736" duration="57000" />
+      <workItem from="1778153857381" duration="1295000" />
+      <workItem from="1778155303221" duration="162000" />
+      <workItem from="1778237677384" duration="4025000" />
+      <workItem from="1778287023892" duration="2027000" />
+      <workItem from="1778326850716" duration="3976000" />
+      <workItem from="1778330892746" duration="149000" />
+      <workItem from="1778411752192" duration="2278000" />
+      <workItem from="1778499593749" duration="3854000" />
+      <workItem from="1778573880416" duration="2712000" />
+      <workItem from="1778585095695" duration="4574000" />
+      <workItem from="1778664316930" duration="3976000" />
+      <workItem from="1778737369207" duration="6206000" />
+      <workItem from="1778757733058" duration="2573000" />
+      <workItem from="1778835216649" duration="6666000" />
+      <workItem from="1778930463217" duration="5871000" />
+      <workItem from="1779016171270" duration="3041000" />
+      <workItem from="1779019438936" duration="3057000" />
+      <workItem from="1779187370303" duration="3132000" />
+      <workItem from="1779246802233" duration="5014000" />
+      <workItem from="1779275593793" duration="294000" />
+      <workItem from="1779451673036" duration="3288000" />
+      <workItem from="1779460878465" duration="1869000" />
+      <workItem from="1779497491337" duration="8000" />
+      <workItem from="1779498316677" duration="3537000" />
+      <workItem from="1779537863682" duration="3221000" />
+      <workItem from="1779625282911" duration="6909000" />
+      <workItem from="1779636240619" duration="826000" />
+      <workItem from="1779711950110" duration="1298000" />
+      <workItem from="1779783489330" duration="2608000" />
+      <workItem from="1779879314347" duration="2103000" />
+      <workItem from="1779965866832" duration="4067000" />
+      <workItem from="1779982239827" duration="1042000" />
+      <workItem from="1780053891528" duration="2482000" />
+      <workItem from="1780141349462" duration="7976000" />
+      <workItem from="1780157309709" duration="1153000" />
+      <workItem from="1780230641169" duration="3606000" />
+      <workItem from="1780235804505" duration="428000" />
+      <workItem from="1780313138248" duration="5672000" />
+      <workItem from="1780402244869" duration="2627000" />
+      <workItem from="1780455638679" duration="2437000" />
+      <workItem from="1780483071227" duration="3818000" />
+      <workItem from="1780486927424" duration="1909000" />
+      <workItem from="1780571588152" duration="3811000" />
+      <workItem from="1780577174577" duration="897000" />
+      <workItem from="1780657593355" duration="138000" />
+      <workItem from="1780658697162" duration="831000" />
+      <workItem from="1780745929223" duration="598000" />
+      <workItem from="1780814226715" duration="93000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

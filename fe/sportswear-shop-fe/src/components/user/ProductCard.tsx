@@ -5,15 +5,9 @@ type Props = {
   image: string;
 };
 
-export default function ProductCard({
-  name,
-  price,
-  oldPrice,
-  image,
-}: Props) {
+export default function ProductCard({ name, price, oldPrice, image }: Props) {
   return (
     <div className="group cursor-pointer">
-
       <div className="overflow-hidden rounded bg-gray-100">
         <img
           src={image}
@@ -22,19 +16,13 @@ export default function ProductCard({
       </div>
 
       <div className="mt-3">
-        <h3 className="font-semibold uppercase">
-          {name}
-        </h3>
+        <h3 className="font-semibold uppercase">{name}</h3>
 
         <div className="mt-2 flex gap-2 items-center">
-          <span className="font-bold text-red-600">
-            {price}
-          </span>
+          <span className="font-bold text-red-600">{price}</span>
 
           {oldPrice ? (
-            <span className="text-gray-400 line-through">
-              {oldPrice}
-            </span>
+            <span className="text-gray-400 line-through">{oldPrice}</span>
           ) : null}
         </div>
       </div>

@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sportswear.backend.dto.user.ChangePasswordRequest;
 import com.sportswear.backend.dto.user.UserProfileRequest;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -83,6 +85,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<UserProfileResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
     // Helper
     private UserProfileResponse mapToResponse(User user) {
         return UserProfileResponse.builder()

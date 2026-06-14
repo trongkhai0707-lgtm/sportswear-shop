@@ -30,7 +30,7 @@ export default function ProductListPage() {
 
   const categories = useMemo(() => {
     const unique = Array.from(
-      new Set(products.map((product) => product.categoryName))
+      new Set(products.map((product) => product.categoryName)),
     );
 
     return ["all", ...unique];
@@ -55,7 +55,9 @@ export default function ProductListPage() {
       <main className="p-6">
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-3xl font-bold">Danh sách sản phẩm: {count} kết quả</h2>
+            <h2 className="text-3xl font-bold">
+              Danh sách sản phẩm: {count} kết quả
+            </h2>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

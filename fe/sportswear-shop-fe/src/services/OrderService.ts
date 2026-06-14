@@ -48,17 +48,24 @@ export const fetchPaymentMethods = async (): Promise<PaymentMethod[]> => {
   return response.data;
 };
 
-export const submitCheckout = async (payload: CheckoutRequest): Promise<void> => {
+export const submitCheckout = async (
+  payload: CheckoutRequest,
+): Promise<number> => {
   const token = getAccessToken();
   if (!token) {
     throw new Error("Không có token đăng nhập.");
   }
 
-  await axios.post(`${ORDERS_API_URL}/checkout`, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await axios.post<{ orderId: number }>(
+    `${ORDERS_API_URL}/checkout`,
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
+  return response.data.orderId;
 };
 
 export const fetchOrders = async (): Promise<Order[]> => {

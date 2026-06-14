@@ -24,7 +24,7 @@ export interface RegisterRequest {
 
 export const login = async (
   usernameOrEmail: string,
-  password: string
+  password: string,
 ): Promise<AuthResponse> => {
   const response = await axios.post<AuthResponse>(API_URL, {
     usernameOrEmail,
@@ -40,16 +40,14 @@ export const login = async (
         username: response.data.username,
         role: response.data.role,
         fullName: response.data.fullName,
-      })
+      }),
     );
   }
 
   return response.data;
 };
 
-export const register = async (
-  payload: RegisterRequest
-): Promise<void> => {
+export const register = async (payload: RegisterRequest): Promise<void> => {
   await axios.post("http://localhost:8080/api/v1/auth/register", payload);
 };
 

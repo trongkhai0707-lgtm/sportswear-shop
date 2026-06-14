@@ -49,12 +49,19 @@ export default function CartPage() {
       return {
         ...prev,
         items: prev.items.map((it) =>
-          it.itemId === itemId ? { ...it, quantity: qty, subtotal: it.price * qty } : it
+          it.itemId === itemId
+            ? { ...it, quantity: qty, subtotal: it.price * qty }
+            : it,
         ),
-        totalItems: prev.items.reduce((s, it) => s + (it.itemId === itemId ? qty : it.quantity), 0),
+        totalItems: prev.items.reduce(
+          (s, it) => s + (it.itemId === itemId ? qty : it.quantity),
+          0,
+        ),
         totalAmount: prev.items.reduce(
-          (s, it) => s + (it.itemId === itemId ? it.price * qty : it.price * it.quantity),
-          0
+          (s, it) =>
+            s +
+            (it.itemId === itemId ? it.price * qty : it.price * it.quantity),
+          0,
         ),
       };
     });
@@ -80,7 +87,11 @@ export default function CartPage() {
     setUpdating(itemId);
     try {
       await deleteCartItem(itemId);
-      setCart((prev) => prev ? { ...prev, items: prev.items.filter(it => it.itemId !== itemId) } : prev);
+      setCart((prev) =>
+        prev
+          ? { ...prev, items: prev.items.filter((it) => it.itemId !== itemId) }
+          : prev,
+      );
     } catch {
       setError("Xóa thất bại.");
     } finally {
@@ -104,7 +115,9 @@ export default function CartPage() {
       <main className="p-6">
         <div className="mx-auto max-w-2xl rounded border border-gray-200 bg-white p-8 text-center">
           <h2 className="text-xl font-semibold">Cần đăng nhập để truy cập</h2>
-          <p className="mt-3 text-gray-600">Vui lòng đăng nhập để xem giỏ hàng.</p>
+          <p className="mt-3 text-gray-600">
+            Vui lòng đăng nhập để xem giỏ hàng.
+          </p>
           <div className="mt-6 flex justify-center">
             <button
               onClick={() => navigate("/dang-nhap")}
@@ -154,9 +167,16 @@ export default function CartPage() {
           <aside className="w-80 flex-shrink-0">
             <div className="sticky top-6 rounded-lg border bg-white p-4">
               <div className="text-sm text-gray-500">Tổng thanh toán</div>
-              <div className="text-2xl font-bold text-red-600">{cart.totalAmount.toLocaleString('vi-VN')}đ</div>
+              <div className="text-2xl font-bold text-red-600">
+                {cart.totalAmount.toLocaleString("vi-VN")}đ
+              </div>
               <div className="mt-4">
-                <button onClick={() => navigate('/dat-hang')} className="w-full rounded bg-red-600 px-6 py-3 text-white">Đặt hàng</button>
+                <button
+                  onClick={() => navigate("/dat-hang")}
+                  className="w-full rounded bg-red-600 px-6 py-3 text-white"
+                >
+                  Đặt hàng
+                </button>
               </div>
             </div>
           </aside>

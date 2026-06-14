@@ -14,7 +14,9 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
-  const [notificationType, setNotificationType] = useState<"success" | "error">("success");
+  const [notificationType, setNotificationType] = useState<"success" | "error">(
+    "success",
+  );
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -30,11 +32,15 @@ export default function RegisterPage() {
         address,
       });
       setNotificationType("success");
-      setNotificationMessage("Đăng ký tài khoản thành công. Vui lòng đăng nhập.");
+      setNotificationMessage(
+        "Đăng ký tài khoản thành công. Vui lòng đăng nhập.",
+      );
       setNotificationOpen(true);
     } catch {
       setNotificationType("error");
-      setNotificationMessage("Đăng ký thất bại. Vui lòng kiểm tra thông tin và thử lại.");
+      setNotificationMessage(
+        "Đăng ký thất bại. Vui lòng kiểm tra thông tin và thử lại.",
+      );
       setNotificationOpen(true);
     } finally {
       setLoading(false);
@@ -80,7 +86,9 @@ export default function RegisterPage() {
           </div>
 
           <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-10">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-8">Đăng ký tài khoản</h2>
+            <h2 className="text-3xl font-semibold text-gray-800 mb-8">
+              Đăng ký tài khoản
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -147,8 +155,11 @@ export default function RegisterPage() {
             </form>
 
             <p className="text-center text-gray-500 mt-8">
-              Đã có tài khoản? {" "}
-              <a href="/dang-nhap" className="text-red-600 font-semibold hover:underline">
+              Đã có tài khoản?{" "}
+              <a
+                href="/dang-nhap"
+                className="text-red-600 font-semibold hover:underline"
+              >
                 Đăng nhập
               </a>
             </p>

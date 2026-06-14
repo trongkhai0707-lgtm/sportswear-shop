@@ -33,22 +33,17 @@ export default function LoginPage() {
             S
           </div>
 
-          <h1 className="text-3xl font-bold text-red-600">
-            Sportswear
-          </h1>
+          <h1 className="text-3xl font-bold text-red-600">Sportswear</h1>
 
           <span className="text-gray-400 text-2xl">|</span>
 
-          <span className="text-2xl font-medium">
-            Đăng nhập
-          </span>
+          <span className="text-2xl font-medium">Đăng nhập</span>
         </div>
       </header>
 
       {/* Main */}
       <main className="min-h-[calc(100vh-96px)] bg-gradient-to-br from-red-700 via-red-600 to-red-500 flex items-center justify-center px-6 py-10">
         <div className="w-full max-w-7xl flex items-center justify-between gap-16">
-          
           {/* Left Banner */}
           <div className="hidden lg:flex flex-1 justify-center">
             <img
@@ -100,9 +95,7 @@ export default function LoginPage() {
             <div className="flex items-center gap-4 my-7">
               <div className="flex-1 h-px bg-gray-300"></div>
 
-              <span className="text-gray-400 text-sm">
-                HOẶC
-              </span>
+              <span className="text-gray-400 text-sm">HOẶC</span>
 
               <div className="flex-1 h-px bg-gray-300"></div>
             </div>

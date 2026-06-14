@@ -28,12 +28,8 @@ export default function SearchResultCard({
           <h3 className="truncate font-semibold text-sm text-gray-900">
             {name}
           </h3>
-          <p className="mt-1 truncate text-xs text-gray-500">
-            {categoryName}
-          </p>
-          <p className="mt-3 text-sm font-bold text-red-600">
-            {price}
-          </p>
+          <p className="mt-1 truncate text-xs text-gray-500">{categoryName}</p>
+          <p className="mt-3 text-sm font-bold text-red-600">{price}</p>
         </div>
       </div>
     </Link>

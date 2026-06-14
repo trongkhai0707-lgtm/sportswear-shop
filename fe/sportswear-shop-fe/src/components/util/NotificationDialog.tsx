@@ -6,10 +6,7 @@ import {
   FaExclamationCircle,
 } from "react-icons/fa";
 
-type NotificationType =
-  | "success"
-  | "info"
-  | "error";
+type NotificationType = "success" | "info" | "error";
 
 interface Props {
   open: boolean;
@@ -24,7 +21,6 @@ export default function NotificationDialog({
   message,
   onClose,
 }: Props) {
-
   if (!open) return null;
 
   const config = {
@@ -57,7 +53,6 @@ export default function NotificationDialog({
         flex items-center justify-center
       "
     >
-
       {/* DIALOG */}
       <div
         onClick={(e) => e.stopPropagation()}
@@ -73,19 +68,11 @@ export default function NotificationDialog({
           animate-[fadeIn_.2s_ease]
         "
       >
-
         {/* HEADER */}
         <div className="flex items-center gap-3">
+          <div className={`text-3xl ${current.color}`}>{current.icon}</div>
 
-          <div
-            className={`text-3xl ${current.color}`}
-          >
-            {current.icon}
-          </div>
-
-          <h2 className="text-2xl font-bold">
-            {current.title}
-          </h2>
+          <h2 className="text-2xl font-bold">{current.title}</h2>
         </div>
 
         {/* MESSAGE */}

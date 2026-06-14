@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6781ce4d-2149-4588-83f7-e81dc4267eb7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/brand/BrandResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../be/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../be/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/BrandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/BrandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/controller/admin/AdminProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/RefreshTokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/RefreshTokenRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/auth/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/cart/CartItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/cart/CartItemRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/category/CategoryRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/category/CategoryRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/OrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/OrderRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/OrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/ShippingInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/order/ShippingInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/product/ProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/product/ProductRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/product/ProductVariantRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/product/ProductVariantRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/user/ChangePasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/user/ChangePasswordRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/user/UserProfileRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/dto/user/UserProfileRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/ErrorResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/initializer/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/initializer/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/repository/BrandRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/ProductVariantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/java/com/sportswear/backend/service/ProductVariantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../be/backend/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../be/backend/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setupTests.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3CG6tEWnHoO5DV3nfFUnIjV5MrH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;K:/sportswear-shop/fe&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6781ce4d-2149-4588-83f7-e81dc4267eb7" name="Changes" comment="" />
+      <created>1775999773148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775999773148</updated>
+      <workItem from="1775999774655" duration="979000" />
+      <workItem from="1776000870952" duration="597000" />
+      <workItem from="1776001751470" duration="67000" />
+      <workItem from="1776087006207" duration="817000" />
+      <workItem from="1776093909167" duration="675000" />
+      <workItem from="1779186841982" duration="175000" />
+      <workItem from="1780457716037" duration="54000" />
+      <workItem from="1780488882766" duration="148000" />
+      <workItem from="1780489164568" duration="120000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

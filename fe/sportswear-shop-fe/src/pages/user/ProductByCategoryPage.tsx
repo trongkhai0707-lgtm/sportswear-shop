@@ -50,7 +50,7 @@ export default function ProductByCategoryPage() {
 
   const categories = useMemo(() => {
     const unique = Array.from(
-      new Set(products.map((product) => product.categoryName))
+      new Set(products.map((product) => product.categoryName)),
     );
 
     return ["all", ...unique];

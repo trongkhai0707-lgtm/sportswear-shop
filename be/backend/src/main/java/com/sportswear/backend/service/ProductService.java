@@ -7,11 +7,13 @@ import com.sportswear.backend.entity.Product;
 import com.sportswear.backend.exception.ResourceNotFoundException;
 import com.sportswear.backend.repository.CategoryRepository;
 import com.sportswear.backend.repository.ProductRepository;
+import com.sportswear.backend.repository.ProductVariantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductVariantRepository variantRepository;
 
     @Transactional(readOnly = true)
     public List<ProductResponse> getAllProducts() {
@@ -156,6 +159,12 @@ public class ProductService {
                 .categoryName(product.getCategory() != null ? product.getCategory().getName() : null)
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
+                .minPrice(
+                        variantRepository.findByProductId(product.getId()).stream()
+                                .map(v -> v.getPrice())
+                                .min(BigDecimal::compareTo)
+                                .orElse(null)
+                )
                 .build();
     }
 

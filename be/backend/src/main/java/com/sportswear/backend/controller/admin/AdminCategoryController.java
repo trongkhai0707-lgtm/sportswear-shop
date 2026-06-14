@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @Tag(name = "Admin — Categories", description = "Quản lý danh mục — chỉ ADMIN")
 @SecurityRequirement(name = "Bearer Authentication")
@@ -52,5 +54,12 @@ public class AdminCategoryController {
         log.warn("Admin xóa danh mục id: {}", id);
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Lấy tất cả danh mục (bao gồm inactive)")
+    @GetMapping
+    public ResponseEntity<List<CategoryResponse>> getAllCategories() {
+        log.info("Admin lấy tất cả danh mục");
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 }

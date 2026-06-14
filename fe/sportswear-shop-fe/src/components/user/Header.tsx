@@ -1,14 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import {
-  FaShoppingCart,
-  FaUser,
-  FaSearch,
-} from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa";
 import { getCurrentUser, getAccessToken } from "../../services/AuthService";
 import { fetchCartCount } from "../../services/CartService";
 import { fetchCategories, type Category } from "../../services/CategoryService";
-import { searchProducts, type ProductItem } from "../../services/ProductService";
+import {
+  searchProducts,
+  type ProductItem,
+} from "../../services/ProductService";
 import SearchResultCard from "./SearchResultCard";
 
 export default function Header() {
@@ -23,7 +22,7 @@ export default function Header() {
 
   const visibleSearchResults = useMemo(
     () => searchResults.slice(0, 3),
-    [searchResults]
+    [searchResults],
   );
 
   useEffect(() => {
@@ -85,18 +84,13 @@ export default function Header() {
   return (
     <header className="bg-red-600 text-white shadow-md">
       <div className="relative flex items-center justify-between px-4 py-3">
-
         {/* LOGO */}
-        <Link
-          to="/"
-          className="text-4xl font-extrabold tracking-tight"
-        >
+        <Link to="/" className="text-4xl font-extrabold tracking-tight">
           Sportswear
         </Link>
 
         {/* MENU */}
         <nav className="hidden items-center gap-1 lg:flex">
-
           {/* ALL PRODUCTS */}
           <Link
             to="/tat-ca-san-pham"
@@ -116,7 +110,6 @@ export default function Header() {
             onMouseEnter={() => setShowCategories(true)}
             onMouseLeave={() => setShowCategories(false)}
           >
-
             {/* BUTTON */}
             <button
               className="
@@ -149,10 +142,8 @@ export default function Header() {
         shadow-2xl
       "
                 >
-
                   {categories.length > 0 ? (
                     categories.map((category) => (
-
                       <Link
                         key={category.slug}
                         to={`/the-loai-san-pham/${category.slug}`}
@@ -166,7 +157,6 @@ export default function Header() {
                       >
                         {category.name}
                       </Link>
-
                     ))
                   ) : (
                     <div className="px-5 py-3 text-sm text-gray-500">
@@ -181,7 +171,6 @@ export default function Header() {
 
         {/* RIGHT */}
         <div className="flex items-center gap-5">
-
           {/* SEARCH */}
           <div>
             <div
@@ -279,9 +268,7 @@ export default function Header() {
           >
             <FaUser className="text-2xl" />
 
-            <span>
-              {user?.fullName ?? "Đăng nhập"}
-            </span>
+            <span>{user?.fullName ?? "Đăng nhập"}</span>
           </Link>
         </div>
       </div>

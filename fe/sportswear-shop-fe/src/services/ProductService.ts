@@ -55,44 +55,46 @@ export const fetchProducts = async (): Promise<ProductItem[]> => {
 };
 
 export const fetchProductsByCategorySlug = async (
-  slug: string
+  slug: string,
 ): Promise<ProductItem[]> => {
   const response = await axios.get<ProductApiResponse[]>(
-    `${PRODUCTS_API_URL}/category/slug/${slug}`
+    `${PRODUCTS_API_URL}/category/slug/${slug}`,
   );
 
   return response.data.map(mapProductResponse);
 };
 
 export const fetchProductById = async (
-  productId: number
+  productId: number,
 ): Promise<ProductApiResponse> => {
   const response = await axios.get<ProductApiResponse>(
-    `${PRODUCTS_API_URL}/${productId}`
+    `${PRODUCTS_API_URL}/${productId}`,
   );
 
   return response.data;
 };
 
 export const fetchProductsByCategory = async (
-  categoryId: number
+  categoryId: number,
 ): Promise<ProductItem[]> => {
-    const response = await axios.get<ProductApiResponse[]>(`${PRODUCTS_API_URL}/category/id/${categoryId}`);
-    return response.data.map(mapProductResponse);
+  const response = await axios.get<ProductApiResponse[]>(
+    `${PRODUCTS_API_URL}/category/id/${categoryId}`,
+  );
+  return response.data.map(mapProductResponse);
 };
 
 export const fetchProductVariants = async (
-  productId: number
+  productId: number,
 ): Promise<ProductVariantResponse[]> => {
   const response = await axios.get<ProductVariantResponse[]>(
-    `${PRODUCTS_API_URL}/${productId}/variants`
+    `${PRODUCTS_API_URL}/${productId}/variants`,
   );
 
   return response.data;
 };
 
 export const searchProducts = async (
-  keyword: string
+  keyword: string,
 ): Promise<ProductItem[]> => {
   if (!keyword.trim()) {
     return [];
@@ -104,9 +106,8 @@ export const searchProducts = async (
       params: {
         keyword: keyword.trim(),
       },
-    }
+    },
   );
 
   return response.data.map(mapProductResponse);
 };
-
