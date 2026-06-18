@@ -1,5 +1,7 @@
 package com.sportswear.backend.controller.admin;
 
+import com.sportswear.backend.dto.response.ImageUploadResponse;
+import com.sportswear.backend.service.ImageUploadService;
 import com.sportswear.backend.dto.product.ProductRequest;
 import com.sportswear.backend.dto.product.ProductResponse;
 import com.sportswear.backend.dto.product.ProductVariantRequest;
@@ -16,7 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Slf4j
@@ -30,6 +32,7 @@ public class AdminProductController {
 
     private final ProductService productService;
     private final ProductVariantService productVariantService;
+    private final ImageUploadService imageUploadService;
 
     @Operation(summary = "Tạo sản phẩm mới")
     @PostMapping
@@ -66,6 +69,23 @@ public class AdminProductController {
         log.warn("Admin soft-deleting product id: {}", id);
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Upload ảnh sản phẩm lên Cloudinary",
+            description = "Hỗ trợ upload nhiều ảnh cùng lúc, trả về danh sách URL")
+    @PostMapping(value = "/upload-image", consumes = "multipart/form-data")
+    public ResponseEntity<ImageUploadResponse> uploadProductImages(
+            @RequestParam("files") List<MultipartFile> files) {
+        log.info("Admin uploading {} product image(s)", files.size());
+
+        List<String> urls = imageUploadService.uploadImages(files);
+
+        ImageUploadResponse response = ImageUploadResponse.builder()
+                .imageUrls(urls)
+                .totalUploaded(urls.size())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     // ==================== Variant management ====================
