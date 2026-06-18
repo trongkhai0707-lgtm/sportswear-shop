@@ -59,6 +59,23 @@ export const fetchAdminProductById = async (
   return res.data;
 };
 
+export interface ImageUploadResponse {
+  imageUrls: string[];
+  totalUploaded: number;
+}
+
+export const uploadProductImages = async (
+  files: File[],
+): Promise<ImageUploadResponse> => {
+  const formData = new FormData();
+  files.forEach((file) => formData.append("files", file));
+
+  const res = await axios.post(`${BASE}/products/upload-image`, formData, {
+    headers: authHeader(),
+  });
+  return res.data;
+};
+
 // ---- Orders ----
 export interface AdminOrder {
   orderId: number;

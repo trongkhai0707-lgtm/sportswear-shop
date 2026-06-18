@@ -4,6 +4,7 @@ import {
   createAdminProduct,
   updateAdminProduct,
   fetchAdminProductById,
+  uploadProductImages,
 } from "../../services/AdminService";
 import type { ProductRequest } from "../../services/AdminService";
 import { fetchCategories } from "../../services/CategoryService";
@@ -27,6 +28,7 @@ export default function AdminProductFormPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(isEdit);
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -63,6 +65,24 @@ export default function AdminProductFormPage() {
             ? Number(value)
             : value,
     }));
+  };
+
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setError("");
+    setUploading(true);
+    try {
+      const result = await uploadProductImages([file]);
+      if (result.imageUrls.length > 0) {
+        setForm((prev) => ({ ...prev, imageUrl: result.imageUrls[0] }));
+      }
+    } catch {
+      setError("Upload ảnh thất bại, vui lòng thử lại.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -150,20 +170,22 @@ export default function AdminProductFormPage() {
           />
         </div>
 
-        {/* Image URL */}
+        {/* Ảnh sản phẩm */}
         <div>
-          <label className="block text-sm font-medium mb-1">
-            URL ảnh{" "}
-            <span className="text-gray-400 font-normal">(tạm thời)</span>
-          </label>
+          <label className="block text-sm font-medium mb-1">Ảnh sản phẩm</label>
           <input
-            name="imageUrl"
-            value={form.imageUrl}
-            onChange={handleChange}
-            placeholder="https://..."
-            className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+            type="file"
+            accept="image/*"
+            onChange={handleImageSelect}
+            disabled={uploading}
+            className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:opacity-50"
           />
-          {form.imageUrl && (
+
+          {uploading && (
+            <p className="mt-2 text-sm text-gray-500">Đang upload ảnh...</p>
+          )}
+
+          {form.imageUrl && !uploading && (
             <img
               src={form.imageUrl}
               alt="preview"
@@ -205,7 +227,7 @@ export default function AdminProductFormPage() {
       <div className="flex gap-3">
         <button
           onClick={handleSubmit}
-          disabled={submitting}
+          disabled={submitting || uploading}
           className="px-5 py-2 bg-gray-900 text-white rounded-lg text-sm hover:bg-gray-700 disabled:opacity-50"
         >
           {submitting ? "Đang lưu..." : isEdit ? "Cập nhật" : "Tạo sản phẩm"}
