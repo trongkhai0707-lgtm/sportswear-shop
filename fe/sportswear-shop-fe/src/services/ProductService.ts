@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const PRODUCTS_API_URL = "http://localhost:8080/api/v1/products";
-const IMAGE_PREFIX = "http://localhost:8080/images/";
 
 export interface ProductApiResponse {
   id: number;
@@ -44,7 +43,7 @@ const mapProductResponse = (product: ProductApiResponse): ProductItem => ({
   oldPrice: "",
   image:
     product.imageUrl && product.imageUrl.trim()
-      ? `${IMAGE_PREFIX}${product.imageUrl}`
+      ? product.imageUrl
       : "https://via.placeholder.com/400x320?text=No+Image",
 });
 
