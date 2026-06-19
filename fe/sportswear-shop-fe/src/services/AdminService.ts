@@ -198,3 +198,65 @@ export const fetchAdminUsers = async (): Promise<AdminUser[]> => {
   const res = await axios.get(`${BASE}/users`, { headers: authHeader() });
   return res.data;
 };
+
+// ---- Variants ----
+export interface ProductVariant {
+  id: number;
+  color: string;
+  sizeName: string;
+  price: number;
+  stock: number;
+}
+
+export interface ProductVariantRequest {
+  color: string;
+  sizeId: number;
+  price: number;
+  stock: number;
+}
+
+export const fetchAdminVariants = async (
+  productId: number,
+): Promise<ProductVariant[]> => {
+  const res = await axios.get(`${BASE}/products/${productId}/variants`, {
+    headers: authHeader(),
+  });
+  return res.data;
+};
+
+export const createAdminVariant = async (
+  productId: number,
+  data: ProductVariantRequest,
+): Promise<void> => {
+  await axios.post(`${BASE}/products/${productId}/variants`, data, {
+    headers: authHeader(),
+  });
+};
+
+export const updateAdminVariant = async (
+  variantId: number,
+  data: ProductVariantRequest,
+): Promise<void> => {
+  await axios.put(`${BASE}/products/variants/${variantId}`, data, {
+    headers: authHeader(),
+  });
+};
+
+export const deleteAdminVariant = async (variantId: number): Promise<void> => {
+  await axios.delete(`${BASE}/products/variants/${variantId}`, {
+    headers: authHeader(),
+  });
+};
+
+// ---- Sizes ----
+export interface Size {
+  id: number;
+  name: string;
+}
+
+export const fetchSizes = async (): Promise<Size[]> => {
+  const res = await axios.get("http://localhost:8080/api/v1/sizes", {
+    headers: authHeader(),
+  });
+  return res.data;
+};

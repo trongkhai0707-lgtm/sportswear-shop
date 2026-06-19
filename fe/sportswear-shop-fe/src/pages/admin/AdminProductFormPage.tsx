@@ -5,8 +5,18 @@ import {
   updateAdminProduct,
   fetchAdminProductById,
   uploadProductImages,
+  fetchAdminVariants,
+  createAdminVariant,
+  updateAdminVariant,
+  deleteAdminVariant,
+  fetchSizes,
 } from "../../services/AdminService";
-import type { ProductRequest } from "../../services/AdminService";
+import type {
+  ProductRequest,
+  ProductVariant,
+  ProductVariantRequest,
+  Size,
+} from "../../services/AdminService";
 import { fetchCategories } from "../../services/CategoryService";
 import type { Category } from "../../services/CategoryService";
 
@@ -30,13 +40,34 @@ export default function AdminProductFormPage() {
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [variants, setVariants] = useState<ProductVariant[]>([]);
+  const [deletingVariant, setDeletingVariant] = useState<number | null>(null);
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [editingVariant, setEditingVariant] = useState<ProductVariant | null>(
+    null,
+  );
+  const [showVariantForm, setShowVariantForm] = useState(false);
+  const [variantSubmitting, setVariantSubmitting] = useState(false);
+
+  const EMPTY_VARIANT: ProductVariantRequest = {
+    color: "",
+    sizeId: 0,
+    price: 0,
+    stock: 0,
+  };
+  const [variantForm, setVariantForm] =
+    useState<ProductVariantRequest>(EMPTY_VARIANT);
 
   useEffect(() => {
     fetchCategories().then(setCategories);
+    fetchSizes().then(setSizes);
 
     if (isEdit) {
-      fetchAdminProductById(Number(id))
-        .then((p) => {
+      Promise.all([
+        fetchAdminProductById(Number(id)),
+        fetchAdminVariants(Number(id)),
+      ])
+        .then(([p, v]) => {
           setForm({
             name: p.name,
             description: p.description ?? "",
@@ -45,6 +76,7 @@ export default function AdminProductFormPage() {
             imageUrl: p.imageUrl ?? "",
             active: p.active,
           });
+          setVariants(v);
         })
         .finally(() => setLoading(false));
     }
@@ -108,6 +140,92 @@ export default function AdminProductFormPage() {
       setError("Có lỗi xảy ra, vui lòng thử lại.");
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDeleteVariant = async (variantId: number) => {
+    if (!confirm("Xác nhận xoá variant này?")) return;
+    setDeletingVariant(variantId);
+    try {
+      await deleteAdminVariant(variantId);
+      setVariants((prev) => prev.filter((v) => v.id !== variantId));
+    } catch {
+      setError("Xoá variant thất bại, vui lòng thử lại.");
+    } finally {
+      setDeletingVariant(null);
+    }
+  };
+
+  const handleOpenAddVariant = () => {
+    setEditingVariant(null);
+    setVariantForm(EMPTY_VARIANT);
+    setShowVariantForm(true);
+  };
+
+  const handleOpenEditVariant = (v: ProductVariant) => {
+    setEditingVariant(v);
+    setVariantForm({
+      color: v.color,
+      sizeId: sizes.find((s) => s.name === v.sizeName)?.id ?? 0,
+      price: v.price,
+      stock: v.stock,
+    });
+    setShowVariantForm(true);
+  };
+
+  const handleCancelVariantForm = () => {
+    setShowVariantForm(false);
+    setEditingVariant(null);
+    setVariantForm(EMPTY_VARIANT);
+  };
+
+  const handleVariantFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setVariantForm((prev) => ({
+      ...prev,
+      [name]:
+        name === "sizeId" || name === "price" || name === "stock"
+          ? Number(value)
+          : value,
+    }));
+  };
+
+  const handleSubmitVariant = async () => {
+    if (!variantForm.color.trim()) {
+      setError("Màu không được để trống");
+      return;
+    }
+    if (!variantForm.sizeId) {
+      setError("Vui lòng chọn size");
+      return;
+    }
+    if (variantForm.price <= 0) {
+      setError("Giá phải lớn hơn 0");
+      return;
+    }
+    if (variantForm.stock < 0) {
+      setError("Tồn kho không được âm");
+      return;
+    }
+
+    setError("");
+    setVariantSubmitting(true);
+    try {
+      if (editingVariant) {
+        await updateAdminVariant(editingVariant.id, variantForm);
+      } else {
+        await createAdminVariant(Number(id), variantForm);
+      }
+      // Reload lại danh sách variant sau khi thêm/sửa
+      const updated = await fetchAdminVariants(Number(id));
+      setVariants(updated);
+      handleCancelVariantForm();
+    } catch {
+      setError("Lưu variant thất bại, vui lòng thử lại.");
+    } finally {
+      setVariantSubmitting(false);
     }
   };
 
@@ -222,6 +340,158 @@ export default function AdminProductFormPage() {
           </label>
         </div>
       </div>
+
+      {/* Variants — chỉ hiện khi đang sửa sản phẩm đã tồn tại */}
+      {isEdit && (
+        <div className="bg-white rounded-lg border p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-semibold">Phiên bản (Variants)</h2>
+            {!showVariantForm && (
+              <button
+                onClick={handleOpenAddVariant}
+                className="px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs hover:bg-gray-700"
+              >
+                + Thêm variant
+              </button>
+            )}
+          </div>
+
+          {/* Table danh sách variant */}
+          {variants.length === 0 ? (
+            <p className="text-sm text-gray-400">Chưa có variant nào.</p>
+          ) : (
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b text-left text-gray-500">
+                  <th className="py-2 pr-4">Màu</th>
+                  <th className="py-2 pr-4">Size</th>
+                  <th className="py-2 pr-4">Giá</th>
+                  <th className="py-2 pr-4">Tồn kho</th>
+                  <th className="py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {variants.map((v) => (
+                  <tr key={v.id} className="border-b last:border-0">
+                    <td className="py-2 pr-4">{v.color}</td>
+                    <td className="py-2 pr-4">{v.sizeName}</td>
+                    <td className="py-2 pr-4">
+                      {v.price.toLocaleString("vi-VN")}đ
+                    </td>
+                    <td className="py-2 pr-4">{v.stock}</td>
+                    <td className="py-2 flex gap-3">
+                      <button
+                        onClick={() => handleOpenEditVariant(v)}
+                        className="text-blue-500 hover:text-blue-700 text-xs"
+                      >
+                        Sửa
+                      </button>
+                      <button
+                        onClick={() => handleDeleteVariant(v.id)}
+                        disabled={deletingVariant === v.id}
+                        className="text-red-500 hover:text-red-700 text-xs disabled:opacity-50"
+                      >
+                        {deletingVariant === v.id ? "Đang xoá..." : "Xoá"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {/* Form thêm/sửa variant — hiện khi bấm "+ Thêm variant" hoặc "Sửa" */}
+          {showVariantForm && (
+            <div className="border rounded-lg p-4 space-y-3 bg-gray-50">
+              <h3 className="text-sm font-medium">
+                {editingVariant ? "Sửa variant" : "Thêm variant mới"}
+              </h3>
+
+              <div className="grid grid-cols-2 gap-3">
+                {/* Màu */}
+                <div>
+                  <label className="block text-xs font-medium mb-1">Màu</label>
+                  <input
+                    name="color"
+                    value={variantForm.color}
+                    onChange={handleVariantFormChange}
+                    placeholder="VD: Đen, Trắng, Xanh..."
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  />
+                </div>
+
+                {/* Size */}
+                <div>
+                  <label className="block text-xs font-medium mb-1">Size</label>
+                  <select
+                    name="sizeId"
+                    value={variantForm.sizeId}
+                    onChange={handleVariantFormChange}
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  >
+                    <option value={0}>-- Chọn size --</option>
+                    {sizes.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Giá */}
+                <div>
+                  <label className="block text-xs font-medium mb-1">
+                    Giá (VND)
+                  </label>
+                  <input
+                    name="price"
+                    type="number"
+                    min={0}
+                    value={variantForm.price}
+                    onChange={handleVariantFormChange}
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  />
+                </div>
+
+                {/* Tồn kho */}
+                <div>
+                  <label className="block text-xs font-medium mb-1">
+                    Tồn kho
+                  </label>
+                  <input
+                    name="stock"
+                    type="number"
+                    min={0}
+                    value={variantForm.stock}
+                    onChange={handleVariantFormChange}
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  onClick={handleSubmitVariant}
+                  disabled={variantSubmitting}
+                  className="px-4 py-1.5 bg-gray-900 text-white rounded-lg text-sm hover:bg-gray-700 disabled:opacity-50"
+                >
+                  {variantSubmitting
+                    ? "Đang lưu..."
+                    : editingVariant
+                      ? "Cập nhật"
+                      : "Thêm"}
+                </button>
+                <button
+                  onClick={handleCancelVariantForm}
+                  className="px-4 py-1.5 border rounded-lg text-sm hover:bg-gray-50"
+                >
+                  Huỷ
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Actions */}
       <div className="flex gap-3">
