@@ -1,3 +1,4 @@
+import LoadingSpinner from "../../components/user/LoadingSpinner";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/user/ProductCard";
@@ -84,9 +85,7 @@ export default function ProductListPage() {
         </div>
 
         {loading ? (
-          <div className="rounded border border-gray-200 bg-white p-10 text-center text-gray-600">
-            Đang tải sản phẩm...
-          </div>
+          <LoadingSpinner message="Đang tải sản phẩm..." />
         ) : error ? (
           <div className="rounded border border-red-200 bg-red-50 p-10 text-center text-red-700">
             {error}

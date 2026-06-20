@@ -1,6 +1,6 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
-const CATEGORIES_API_URL = "http://localhost:8080/api/v1/categories";
+const CATEGORIES_API_URL = "/api/v1/categories";
 
 export interface Category {
   id: number;
@@ -13,12 +13,12 @@ export interface Category {
 }
 
 export const fetchCategories = async (): Promise<Category[]> => {
-  const response = await axios.get<Category[]>(CATEGORIES_API_URL);
+  const response = await axiosInstance.get<Category[]>(CATEGORIES_API_URL);
   return response.data;
 };
 
 export const fetchCategoryBySlug = async (slug: string): Promise<Category> => {
-  const response = await axios.get<Category>(
+  const response = await axiosInstance.get<Category>(
     `${CATEGORIES_API_URL}/slug/${slug}`,
   );
   return response.data;

@@ -1,7 +1,6 @@
-import axios from "axios";
-import { getAccessToken } from "./AuthService";
+import axiosInstance from "./axiosInstance";
 
-const CART_API_URL = "http://localhost:8080/api/v1/cart";
+const CART_API_URL = "/api/v1/cart";
 
 export interface CartResponse {
   totalItems: number;
@@ -27,17 +26,7 @@ export interface CartDetailResponse {
 }
 
 export const fetchCartCount = async (): Promise<number> => {
-  const token = getAccessToken();
-  if (!token) {
-    return 0;
-  }
-
-  const response = await axios.get<CartResponse>(CART_API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await axiosInstance.get<CartResponse>(CART_API_URL);
   return response.data?.totalItems ?? 0;
 };
 
@@ -49,63 +38,24 @@ export interface AddToCartRequest {
 
 export const fetchCartDetails =
   async (): Promise<CartDetailResponse | null> => {
-    const token = getAccessToken();
-    if (!token) {
-      return null;
-    }
-
-    const response = await axios.get<CartDetailResponse>(CART_API_URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    const response = await axiosInstance.get<CartDetailResponse>(CART_API_URL);
     return response.data;
   };
 
 export const addToCart = async (payload: AddToCartRequest): Promise<void> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  await axios.post(`${CART_API_URL}/add`, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  await axiosInstance.post(`${CART_API_URL}/add`, payload);
 };
 
 export const updateCartItem = async (
   itemId: number,
   quantity: number,
 ): Promise<void> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  // API expects quantity as query parameter
-  await axios.put(
+  await axiosInstance.put(
     `${CART_API_URL}/items/${itemId}?quantity=${quantity}`,
     null,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
 };
 
 export const deleteCartItem = async (itemId: number): Promise<void> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  await axios.delete(`${CART_API_URL}/items/${itemId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  await axiosInstance.delete(`${CART_API_URL}/items/${itemId}`);
 };

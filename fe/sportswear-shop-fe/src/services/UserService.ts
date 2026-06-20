@@ -1,7 +1,6 @@
-import axios from "axios";
-import { getAccessToken } from "./AuthService";
+import axiosInstance from "./axiosInstance";
 
-const USERS_API_URL = "http://localhost:8080/api/v1/users";
+const USERS_API_URL = "/api/v1/users";
 
 export interface UserProfile {
   id: number;
@@ -17,16 +16,8 @@ export interface UserProfile {
 }
 
 export const fetchUserProfile = async (): Promise<UserProfile> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  const response = await axios.get<UserProfile>(`${USERS_API_URL}/profile`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await axiosInstance.get<UserProfile>(
+    `${USERS_API_URL}/profile`,
+  );
   return response.data;
 };

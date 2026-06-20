@@ -65,10 +65,10 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className="bg-white rounded-lg border overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 text-left">
-            <tr>
+          <thead className="bg-gray-50 text-gray-500 text-left whitespace-nowrap">
+            <tr className="whitespace-nowrap">
               <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Họ tên</th>
               <th className="px-4 py-3">Username</th>
@@ -87,7 +87,7 @@ export default function AdminUsersPage() {
               </tr>
             ) : (
               filtered.map((u) => (
-                <tr key={u.id} className="hover:bg-gray-50">
+                <tr key={u.id} className="hover:bg-gray-50 whitespace-nowrap">
                   <td className="px-4 py-3 text-gray-400">#{u.id}</td>
                   <td className="px-4 py-3 font-medium">{u.fullName}</td>
                   <td className="px-4 py-3 text-gray-500">{u.username}</td>

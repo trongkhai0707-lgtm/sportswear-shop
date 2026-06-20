@@ -1,3 +1,4 @@
+import LoadingSpinner from "../../components/user/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaClipboardList, FaSignOutAlt } from "react-icons/fa";
@@ -29,9 +30,7 @@ export default function AccountPage() {
   if (loading) {
     return (
       <main className="p-6">
-        <div className="rounded border border-gray-200 bg-white p-10 text-center text-gray-600">
-          Đang tải...
-        </div>
+        <LoadingSpinner />
       </main>
     );
   }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const API_URL = "http://localhost:8080/api/v1/auth/login";
 const ACCESS_TOKEN_KEY = "accessToken";
@@ -26,6 +27,7 @@ export const login = async (
   usernameOrEmail: string,
   password: string,
 ): Promise<AuthResponse> => {
+  // Dùng axios raw để tránh circular import (axiosInstance → AuthService → axiosInstance)
   const response = await axios.post<AuthResponse>(API_URL, {
     usernameOrEmail,
     password,
@@ -48,7 +50,7 @@ export const login = async (
 };
 
 export const register = async (payload: RegisterRequest): Promise<void> => {
-  await axios.post("http://localhost:8080/api/v1/auth/register", payload);
+  await axiosInstance.post("/api/v1/auth/register", payload);
 };
 
 export const logout = (): void => {
@@ -71,10 +73,7 @@ export const getCurrentUser = (): {
   fullName: string;
 } | null => {
   const userJson = localStorage.getItem(CURRENT_USER_KEY);
-  if (!userJson) {
-    return null;
-  }
-
+  if (!userJson) return null;
   try {
     return JSON.parse(userJson);
   } catch {

@@ -1,6 +1,6 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
-const PRODUCTS_API_URL = "http://localhost:8080/api/v1/products";
+const PRODUCTS_API_URL = "/api/v1/products";
 
 export interface ProductApiResponse {
   id: number;
@@ -48,35 +48,33 @@ const mapProductResponse = (product: ProductApiResponse): ProductItem => ({
 });
 
 export const fetchProducts = async (): Promise<ProductItem[]> => {
-  const response = await axios.get<ProductApiResponse[]>(PRODUCTS_API_URL);
-
+  const response =
+    await axiosInstance.get<ProductApiResponse[]>(PRODUCTS_API_URL);
   return response.data.map(mapProductResponse);
 };
 
 export const fetchProductsByCategorySlug = async (
   slug: string,
 ): Promise<ProductItem[]> => {
-  const response = await axios.get<ProductApiResponse[]>(
+  const response = await axiosInstance.get<ProductApiResponse[]>(
     `${PRODUCTS_API_URL}/category/slug/${slug}`,
   );
-
   return response.data.map(mapProductResponse);
 };
 
 export const fetchProductById = async (
   productId: number,
 ): Promise<ProductApiResponse> => {
-  const response = await axios.get<ProductApiResponse>(
+  const response = await axiosInstance.get<ProductApiResponse>(
     `${PRODUCTS_API_URL}/${productId}`,
   );
-
   return response.data;
 };
 
 export const fetchProductsByCategory = async (
   categoryId: number,
 ): Promise<ProductItem[]> => {
-  const response = await axios.get<ProductApiResponse[]>(
+  const response = await axiosInstance.get<ProductApiResponse[]>(
     `${PRODUCTS_API_URL}/category/id/${categoryId}`,
   );
   return response.data.map(mapProductResponse);
@@ -85,28 +83,19 @@ export const fetchProductsByCategory = async (
 export const fetchProductVariants = async (
   productId: number,
 ): Promise<ProductVariantResponse[]> => {
-  const response = await axios.get<ProductVariantResponse[]>(
+  const response = await axiosInstance.get<ProductVariantResponse[]>(
     `${PRODUCTS_API_URL}/${productId}/variants`,
   );
-
   return response.data;
 };
 
 export const searchProducts = async (
   keyword: string,
 ): Promise<ProductItem[]> => {
-  if (!keyword.trim()) {
-    return [];
-  }
-
-  const response = await axios.get<ProductApiResponse[]>(
+  if (!keyword.trim()) return [];
+  const response = await axiosInstance.get<ProductApiResponse[]>(
     `${PRODUCTS_API_URL}/search`,
-    {
-      params: {
-        keyword: keyword.trim(),
-      },
-    },
+    { params: { keyword: keyword.trim() } },
   );
-
   return response.data.map(mapProductResponse);
 };

@@ -112,10 +112,10 @@ export default function AdminCategoriesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className="bg-white rounded-lg border overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 text-left">
-            <tr>
+          <thead className="bg-gray-50 text-gray-500 text-left whitespace-nowrap">
+            <tr className="whitespace-nowrap">
               <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Tên danh mục</th>
               <th className="px-4 py-3">Slug</th>
@@ -133,7 +133,7 @@ export default function AdminCategoriesPage() {
               </tr>
             ) : (
               categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-gray-50">
+                <tr key={cat.id} className="hover:bg-gray-50 whitespace-nowrap">
                   <td className="px-4 py-3 text-gray-400">#{cat.id}</td>
                   <td className="px-4 py-3 font-medium">{cat.name}</td>
                   <td className="px-4 py-3 text-gray-400">{cat.slug}</td>

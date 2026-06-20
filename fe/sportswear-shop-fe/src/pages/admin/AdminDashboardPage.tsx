@@ -49,32 +49,37 @@ export default function AdminDashboardPage() {
         <div className="px-5 py-4 border-b">
           <h2 className="font-semibold">5 đơn hàng mới nhất</h2>
         </div>
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 text-left">
-            <tr>
-              <th className="px-5 py-3">Mã đơn</th>
-              <th className="px-5 py-3">Khách hàng</th>
-              <th className="px-5 py-3">Tổng tiền</th>
-              <th className="px-5 py-3">Trạng thái</th>
-              <th className="px-5 py-3">Ngày tạo</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {recentOrders.map((order) => (
-              <tr key={order.orderId} className="hover:bg-gray-50">
-                <td className="px-5 py-3">#{order.orderId}</td>
-                <td className="px-5 py-3">{order.customerName}</td>
-                <td className="px-5 py-3">
-                  {order.totalAmount.toLocaleString("vi-VN")}đ
-                </td>
-                <td className="px-5 py-3">{order.status}</td>
-                <td className="px-5 py-3">
-                  {new Date(order.createdAt).toLocaleDateString("vi-VN")}
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-500 text-left whitespace-nowrap">
+              <tr className="whitespace-nowrap">
+                <th className="px-5 py-3">Mã đơn</th>
+                <th className="px-5 py-3">Khách hàng</th>
+                <th className="px-5 py-3">Tổng tiền</th>
+                <th className="px-5 py-3">Trạng thái</th>
+                <th className="px-5 py-3">Ngày tạo</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y">
+              {recentOrders.map((order) => (
+                <tr
+                  key={order.orderId}
+                  className="hover:bg-gray-50 whitespace-nowrap"
+                >
+                  <td className="px-5 py-3">#{order.orderId}</td>
+                  <td className="px-5 py-3">{order.customerName}</td>
+                  <td className="px-5 py-3">
+                    {order.totalAmount.toLocaleString("vi-VN")}đ
+                  </td>
+                  <td className="px-5 py-3">{order.status}</td>
+                  <td className="px-5 py-3">
+                    {new Date(order.createdAt).toLocaleDateString("vi-VN")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -1,11 +1,6 @@
-import axios from "axios";
-import { getAccessToken } from "./AuthService";
+import axiosInstance from "./axiosInstance";
 
-const BASE = "http://localhost:8080/api/v1/admin";
-
-const authHeader = () => ({
-  Authorization: `Bearer ${getAccessToken()}`,
-});
+const BASE = "/api/v1/admin";
 
 // ---- Products ----
 export interface AdminProduct {
@@ -24,7 +19,7 @@ export interface AdminProduct {
 }
 
 export const fetchAdminProducts = async (): Promise<AdminProduct[]> => {
-  const res = await axios.get(`${BASE}/products`, { headers: authHeader() });
+  const res = await axiosInstance.get(`${BASE}/products`);
   return res.data;
 };
 
@@ -40,22 +35,20 @@ export interface ProductRequest {
 export const createAdminProduct = async (
   data: ProductRequest,
 ): Promise<void> => {
-  await axios.post(`${BASE}/products`, data, { headers: authHeader() });
+  await axiosInstance.post(`${BASE}/products`, data);
 };
 
 export const updateAdminProduct = async (
   id: number,
   data: ProductRequest,
 ): Promise<void> => {
-  await axios.put(`${BASE}/products/${id}`, data, { headers: authHeader() });
+  await axiosInstance.put(`${BASE}/products/${id}`, data);
 };
 
 export const fetchAdminProductById = async (
   id: number,
 ): Promise<AdminProduct> => {
-  const res = await axios.get(`${BASE}/products/${id}`, {
-    headers: authHeader(),
-  });
+  const res = await axiosInstance.get(`${BASE}/products/${id}`);
   return res.data;
 };
 
@@ -70,9 +63,13 @@ export const uploadProductImages = async (
   const formData = new FormData();
   files.forEach((file) => formData.append("files", file));
 
-  const res = await axios.post(`${BASE}/products/upload-image`, formData, {
-    headers: authHeader(),
-  });
+  const res = await axiosInstance.post(
+    `${BASE}/products/upload-image`,
+    formData,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    },
+  );
   return res.data;
 };
 
@@ -87,7 +84,7 @@ export interface AdminOrder {
 }
 
 export const fetchAdminOrders = async (): Promise<AdminOrder[]> => {
-  const res = await axios.get(`${BASE}/orders`, { headers: authHeader() });
+  const res = await axiosInstance.get(`${BASE}/orders`);
   return res.data;
 };
 
@@ -118,9 +115,7 @@ export interface AdminOrderDetail {
 export const fetchAdminOrderDetail = async (
   orderId: number,
 ): Promise<AdminOrderDetail> => {
-  const res = await axios.get(`${BASE}/orders/${orderId}`, {
-    headers: authHeader(),
-  });
+  const res = await axiosInstance.get(`${BASE}/orders/${orderId}`);
   return res.data;
 };
 
@@ -128,19 +123,19 @@ export const updateOrderStatus = async (
   orderId: number,
   status: string,
 ): Promise<void> => {
-  await axios.put(`${BASE}/orders/${orderId}/status?status=${status}`, null, {
-    headers: authHeader(),
-  });
+  await axiosInstance.put(
+    `${BASE}/orders/${orderId}/status?status=${status}`,
+    null,
+  );
 };
 
 export const updatePaymentStatus = async (
   orderId: number,
   status: string,
 ): Promise<void> => {
-  await axios.put(
+  await axiosInstance.put(
     `${BASE}/orders/${orderId}/payment-status?status=${status}`,
     null,
-    { headers: authHeader() },
   );
 };
 
@@ -161,25 +156,25 @@ export interface CategoryRequest {
 }
 
 export const fetchAdminCategories = async (): Promise<AdminCategory[]> => {
-  const res = await axios.get(`${BASE}/categories`, { headers: authHeader() });
+  const res = await axiosInstance.get(`${BASE}/categories`);
   return res.data;
 };
 
 export const createAdminCategory = async (
   data: CategoryRequest,
 ): Promise<void> => {
-  await axios.post(`${BASE}/categories`, data, { headers: authHeader() });
+  await axiosInstance.post(`${BASE}/categories`, data);
 };
 
 export const updateAdminCategory = async (
   id: number,
   data: CategoryRequest,
 ): Promise<void> => {
-  await axios.put(`${BASE}/categories/${id}`, data, { headers: authHeader() });
+  await axiosInstance.put(`${BASE}/categories/${id}`, data);
 };
 
 export const deleteAdminCategory = async (id: number): Promise<void> => {
-  await axios.delete(`${BASE}/categories/${id}`, { headers: authHeader() });
+  await axiosInstance.delete(`${BASE}/categories/${id}`);
 };
 
 // ---- Users ----
@@ -195,7 +190,7 @@ export interface AdminUser {
 }
 
 export const fetchAdminUsers = async (): Promise<AdminUser[]> => {
-  const res = await axios.get(`${BASE}/users`, { headers: authHeader() });
+  const res = await axiosInstance.get(`${BASE}/users`);
   return res.data;
 };
 
@@ -218,9 +213,7 @@ export interface ProductVariantRequest {
 export const fetchAdminVariants = async (
   productId: number,
 ): Promise<ProductVariant[]> => {
-  const res = await axios.get(`${BASE}/products/${productId}/variants`, {
-    headers: authHeader(),
-  });
+  const res = await axiosInstance.get(`${BASE}/products/${productId}/variants`);
   return res.data;
 };
 
@@ -228,24 +221,18 @@ export const createAdminVariant = async (
   productId: number,
   data: ProductVariantRequest,
 ): Promise<void> => {
-  await axios.post(`${BASE}/products/${productId}/variants`, data, {
-    headers: authHeader(),
-  });
+  await axiosInstance.post(`${BASE}/products/${productId}/variants`, data);
 };
 
 export const updateAdminVariant = async (
   variantId: number,
   data: ProductVariantRequest,
 ): Promise<void> => {
-  await axios.put(`${BASE}/products/variants/${variantId}`, data, {
-    headers: authHeader(),
-  });
+  await axiosInstance.put(`${BASE}/products/variants/${variantId}`, data);
 };
 
 export const deleteAdminVariant = async (variantId: number): Promise<void> => {
-  await axios.delete(`${BASE}/products/variants/${variantId}`, {
-    headers: authHeader(),
-  });
+  await axiosInstance.delete(`${BASE}/products/variants/${variantId}`);
 };
 
 // ---- Sizes ----
@@ -255,8 +242,6 @@ export interface Size {
 }
 
 export const fetchSizes = async (): Promise<Size[]> => {
-  const res = await axios.get("http://localhost:8080/api/v1/sizes", {
-    headers: authHeader(),
-  });
+  const res = await axiosInstance.get("/api/v1/sizes");
   return res.data;
 };

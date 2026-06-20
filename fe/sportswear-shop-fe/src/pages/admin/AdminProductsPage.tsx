@@ -63,10 +63,10 @@ export default function AdminProductsPage() {
       />
 
       {/* Table */}
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className="bg-white rounded-lg border overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 text-left">
-            <tr>
+          <thead className="bg-gray-50 text-gray-500 text-left whitespace-nowrap">
+            <tr className="whitespace-nowrap">
               <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Tên sản phẩm</th>
               <th className="px-4 py-3">Danh mục</th>
@@ -87,7 +87,7 @@ export default function AdminProductsPage() {
               </tr>
             ) : (
               paginated.map((p) => (
-                <tr key={p.id} className="hover:bg-gray-50">
+                <tr key={p.id} className="hover:bg-gray-50 whitespace-nowrap">
                   <td className="px-4 py-3 text-gray-400">#{p.id}</td>
                   <td className="px-4 py-3 font-medium">{p.name}</td>
                   <td className="px-4 py-3 text-gray-500">{p.categoryName}</td>

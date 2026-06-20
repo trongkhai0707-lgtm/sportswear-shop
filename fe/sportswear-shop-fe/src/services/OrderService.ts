@@ -1,8 +1,7 @@
-import axios from "axios";
-import { getAccessToken } from "./AuthService";
+import axiosInstance from "./axiosInstance";
 
-const PAYMENT_API_URL = "http://localhost:8080/api/v1/payment-methods";
-const ORDERS_API_URL = "http://localhost:8080/api/v1/orders";
+const PAYMENT_API_URL = "/api/v1/payment-methods";
+const ORDERS_API_URL = "/api/v1/orders";
 
 export interface PaymentMethod {
   id: number;
@@ -44,41 +43,21 @@ export interface Order {
 }
 
 export const fetchPaymentMethods = async (): Promise<PaymentMethod[]> => {
-  const response = await axios.get<PaymentMethod[]>(PAYMENT_API_URL);
+  const response = await axiosInstance.get<PaymentMethod[]>(PAYMENT_API_URL);
   return response.data;
 };
 
 export const submitCheckout = async (
   payload: CheckoutRequest,
 ): Promise<number> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  const response = await axios.post<{ orderId: number }>(
+  const response = await axiosInstance.post<{ orderId: number }>(
     `${ORDERS_API_URL}/checkout`,
     payload,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   );
   return response.data.orderId;
 };
 
 export const fetchOrders = async (): Promise<Order[]> => {
-  const token = getAccessToken();
-  if (!token) {
-    throw new Error("Không có token đăng nhập.");
-  }
-
-  const response = await axios.get<Order[]>(ORDERS_API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+  const response = await axiosInstance.get<Order[]>(ORDERS_API_URL);
   return response.data;
 };

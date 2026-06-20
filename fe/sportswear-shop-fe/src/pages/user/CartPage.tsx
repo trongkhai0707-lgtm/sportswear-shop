@@ -1,3 +1,4 @@
+import LoadingSpinner from "../../components/user/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -102,9 +103,7 @@ export default function CartPage() {
   if (loading) {
     return (
       <main className="p-6">
-        <div className="rounded border border-gray-200 bg-white p-10 text-center text-gray-600">
-          Đang tải giỏ hàng...
-        </div>
+        <LoadingSpinner message="Đang tải giỏ hàng..." />
       </main>
     );
   }
@@ -151,7 +150,7 @@ export default function CartPage() {
           </div>
         )}
 
-        <div className="flex gap-6">
+        <div className="flex flex-col gap-6 lg:flex-row">
           <div className="flex-1 space-y-4">
             {cart.items.map((item) => (
               <CartItemComponent

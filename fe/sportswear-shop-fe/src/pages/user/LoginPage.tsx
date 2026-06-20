@@ -91,28 +91,6 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="flex items-center gap-4 my-7">
-              <div className="flex-1 h-px bg-gray-300"></div>
-
-              <span className="text-gray-400 text-sm">HOẶC</span>
-
-              <div className="flex-1 h-px bg-gray-300"></div>
-            </div>
-
-            {/* Google Login */}
-            <button className="w-full h-14 border border-gray-300 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-                alt="Google"
-                className="w-6 h-6"
-              />
-
-              <span className="text-gray-700 font-medium">
-                Đăng nhập với Google
-              </span>
-            </button>
-
             {/* Register */}
             <p className="text-center text-gray-500 mt-8">
               Chưa có tài khoản?{" "}

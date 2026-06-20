@@ -125,11 +125,11 @@ export default function AdminOrdersPage() {
       <div className="flex gap-4">
         {/* Table */}
         <div
-          className={`bg-white rounded-lg border overflow-hidden ${detail ? "w-1/2" : "w-full"}`}
+          className={`bg-white rounded-lg border overflow-x-auto ${detail ? "w-1/2" : "w-full"}`}
         >
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-500 text-left">
-              <tr>
+            <thead className="bg-gray-50 text-gray-500 text-left whitespace-nowrap">
+              <tr className="whitespace-nowrap">
                 <th className="px-4 py-3">Mã đơn</th>
                 <th className="px-4 py-3">Khách hàng</th>
                 <th className="px-4 py-3">Tổng tiền</th>
@@ -153,7 +153,7 @@ export default function AdminOrdersPage() {
                   <tr
                     key={o.orderId}
                     onClick={() => openDetail(o.orderId)}
-                    className={`hover:bg-gray-50 cursor-pointer ${detail?.orderId === o.orderId ? "bg-blue-50" : ""}`}
+                    className={`hover:bg-gray-50 whitespace-nowrap ${detail?.orderId === o.orderId ? "bg-blue-50" : ""}`}
                   >
                     <td className="px-4 py-3 text-gray-400">#{o.orderId}</td>
                     <td className="px-4 py-3 font-medium">{o.customerName}</td>

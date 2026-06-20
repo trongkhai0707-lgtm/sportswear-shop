@@ -1,3 +1,4 @@
+import LoadingSpinner from "../../components/user/LoadingSpinner";
 import { useEffect, useState, type FormEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -110,9 +111,7 @@ export default function CheckoutPage() {
   if (loading) {
     return (
       <main className="p-6">
-        <div className="rounded border border-gray-200 bg-white p-10 text-center text-gray-600">
-          Đang tải thông tin thanh toán...
-        </div>
+        <LoadingSpinner message="Đang tải thông tin thanh toán..." />
       </main>
     );
   }
@@ -163,7 +162,7 @@ export default function CheckoutPage() {
           </div>
         )}
 
-        <div className="flex gap-6">
+        <div className="flex flex-col-reverse gap-6 lg:flex-row">
           {/* LEFT: Form */}
           <form onSubmit={handleSubmit} className="flex-1 space-y-6">
             {/* User Info */}

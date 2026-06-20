@@ -18,7 +18,7 @@ export default function ProductGrid({ title, products }: ProductGridProps) {
   return (
     <section className="mx-auto mt-10 max-w-7xl">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-3xl font-bold uppercase">{title}</h2>
+        <h2 className="text-xl font-bold uppercase sm:text-3xl">{title}</h2>
 
         <button className="font-semibold hover:text-red-600">Xem tất cả</button>
       </div>
