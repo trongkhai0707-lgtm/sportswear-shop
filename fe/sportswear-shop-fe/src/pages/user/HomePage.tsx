@@ -10,22 +10,20 @@ import { CATEGORY_SLUGS } from "../../constants/categorySlug";
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<ProductItem[]>([]);
-  const [shirtProducts, setShirtProducts] = useState<ProductItem[]>([]);
-  const [nikeDriFitProducts, setNikeDriFitProducts] = useState<ProductItem[]>(
-    [],
-  );
+  const [jerseyProducts, setJerseyProducts] = useState<ProductItem[]>([]);
+  const [pantsProducts, setPantsProducts] = useState<ProductItem[]>([]);
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const [featured, shirts, nikeDriFit] = await Promise.all([
+        const [featured, jerseys, pants] = await Promise.all([
           fetchProducts(),
-          fetchProductsByCategorySlug(CATEGORY_SLUGS.SHIRT),
-          fetchProductsByCategorySlug(CATEGORY_SLUGS.NIKE_SHIRT),
+          fetchProductsByCategorySlug(CATEGORY_SLUGS.JERSEY),
+          fetchProductsByCategorySlug(CATEGORY_SLUGS.PANTS),
         ]);
         setFeaturedProducts(featured);
-        setShirtProducts(shirts);
-        setNikeDriFitProducts(nikeDriFit);
+        setJerseyProducts(jerseys);
+        setPantsProducts(pants);
       } catch (error) {
         console.error("Error fetching homepage products:", error);
       }
@@ -38,8 +36,8 @@ export default function HomePage() {
     <div>
       <BannerSlider />
       <ProductGrid title="Sản phẩm nổi bật" products={featuredProducts} />
-      <ProductGrid title="Áo thun co giãn" products={shirtProducts} />
-      <ProductGrid title="Áo thun Nike Dri-FIT" products={nikeDriFitProducts} />
+      <ProductGrid title="Sport Jersey" products={jerseyProducts} />
+      <ProductGrid title="Quần Thể Thao" products={pantsProducts} />
     </div>
   );
 }

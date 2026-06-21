@@ -12,6 +12,7 @@ export interface ProductApiResponse {
   active: boolean;
   categoryId: number;
   categoryName: string;
+  minPrice: number | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -39,7 +40,9 @@ const mapProductResponse = (product: ProductApiResponse): ProductItem => ({
   name: product.name,
   description: product.description,
   categoryName: product.categoryName,
-  price: "500.000đ",
+  price: product.minPrice
+    ? product.minPrice.toLocaleString("vi-VN") + "đ"
+    : "Liên hệ",
   oldPrice: "",
   image:
     product.imageUrl && product.imageUrl.trim()

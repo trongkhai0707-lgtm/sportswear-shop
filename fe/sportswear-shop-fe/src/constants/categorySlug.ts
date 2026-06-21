@@ -1,4 +1,7 @@
 export const CATEGORY_SLUGS = {
-  SHIRT: "ao-thun-co-gian",
-  NIKE_SHIRT: "o-thun-nike-dri-fit",
+  SHIRT: "ao-thun-the-thao",
+  PANTS: "quan-the-thao",
+  JERSEY: "sport-jersey",
+  JACKET: "ao-khoac",
+  ACCESSORY: "phu-kien",
 } as const;
