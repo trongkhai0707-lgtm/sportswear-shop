@@ -25,6 +25,7 @@ public class Role {
 
     // Quan hệ ngược lại với User
     @ManyToMany(mappedBy = "roles")
+    @Builder.Default
     private Set<User> users = new HashSet<>();
 }
 
