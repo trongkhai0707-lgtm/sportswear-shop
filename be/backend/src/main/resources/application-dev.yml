@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sportswear_shop_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  devtools:
+    restart:
+      enabled: true
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: yourSuperSecretKeyForSportwearApp2026ChangeThisInProductionMustBe64BytesLong!!!!
+    expiration: 86400000
+    refresh-expiration: 604800000
+  frontend-url: http://localhost:3000
+
+cloudinary:
+  cloud-name: dtd6swzr5
+  api-key: 677359223769269
+  api-secret: pcRXzH1EC5m3A_7aTALWewi4Mqo
+
+logging:
+  level:
+    root: INFO
+    com.sportswear.backend: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

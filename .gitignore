@@ -1,6 +1,6 @@
 # Sensitive config
-be/backend/src/main/resources/application.yml
 be/backend/src/main/resources/application.properties
-
 # Logs
 be/backend/logs/
+# Local dev secrets
+be/backend/src/main/resources/application-dev.yml
