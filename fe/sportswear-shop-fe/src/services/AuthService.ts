@@ -1,7 +1,9 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
-const API_URL = "http://localhost:8080/api/v1/auth/login";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1";
+const API_URL = `${API_BASE_URL}/auth/login`;
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
 const CURRENT_USER_KEY = "currentUser";
@@ -50,7 +52,7 @@ export const login = async (
 };
 
 export const register = async (payload: RegisterRequest): Promise<void> => {
-  await axiosInstance.post("/api/v1/auth/register", payload);
+  await axiosInstance.post("/auth/register", payload);
 };
 
 export const logout = (): void => {
