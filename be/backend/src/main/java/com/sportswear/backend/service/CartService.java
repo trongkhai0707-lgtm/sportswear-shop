@@ -83,7 +83,7 @@ public class CartService {
         return mapToResponse(cartRepository.save(cart));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CartResponse getCart() {
         User currentUser = userService.getCurrentUser();
         log.debug("Fetching cart for user: {}", currentUser.getUsername());
