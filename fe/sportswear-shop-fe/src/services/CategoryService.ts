@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const CATEGORIES_API_URL = "/api/v1/categories";
+const CATEGORIES_API_URL = "/categories";
 
 export interface Category {
   id: number;

@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const PRODUCTS_API_URL = "/api/v1/products";
+const PRODUCTS_API_URL = "/products";
 
 export interface ProductApiResponse {
   id: number;

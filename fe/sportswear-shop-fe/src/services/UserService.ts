@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const USERS_API_URL = "/api/v1/users";
+const USERS_API_URL = "/users";
 
 export interface UserProfile {
   id: number;

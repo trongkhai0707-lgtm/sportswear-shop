@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const BASE = "/api/v1/admin";
+const BASE = "/admin";
 
 // ---- Products ----
 export interface AdminProduct {
@@ -242,6 +242,6 @@ export interface Size {
 }
 
 export const fetchSizes = async (): Promise<Size[]> => {
-  const res = await axiosInstance.get("/api/v1/sizes");
+  const res = await axiosInstance.get("/sizes");
   return res.data;
 };

@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const CART_API_URL = "/api/v1/cart";
+const CART_API_URL = "/cart";
 
 export interface CartResponse {
   totalItems: number;

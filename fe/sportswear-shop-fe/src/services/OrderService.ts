@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 
-const PAYMENT_API_URL = "/api/v1/payment-methods";
-const ORDERS_API_URL = "/api/v1/orders";
+const PAYMENT_API_URL = "/payment-methods";
+const ORDERS_API_URL = "/orders";
 
 export interface PaymentMethod {
   id: number;
