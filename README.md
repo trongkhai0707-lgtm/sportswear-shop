@@ -1,4 +1,4 @@
-# 🏃 Sportswear Shop
+# Sportswear Shop
 
 Ứng dụng thương mại điện tử bán đồ thể thao (sportswear) full-stack, gồm trang mua sắm cho khách hàng và trang quản trị (Admin Panel) cho quản lý sản phẩm, đơn hàng, người dùng.
 
@@ -7,7 +7,7 @@ Dự án được xây dựng theo mô hình **monorepo**, gồm 2 phần tách 
 - **Backend**: RESTful API bằng Spring Boot (Java)
 - **Frontend**: Single Page Application bằng React + TypeScript
 
-> 🎓 Đồ án được thực hiện bởi 2 thành viên — Backend & Admin Panel logic (Huỳnh Trọng Khải), Frontend UI (Trần Minh Quân).
+> Đồ án được thực hiện bởi 2 thành viên — Backend & Admin Panel logic (Huỳnh Trọng Khải), Frontend UI (Trần Minh Quân).
 
 ---
 
@@ -20,10 +20,10 @@ Dự án được xây dựng theo mô hình **monorepo**, gồm 2 phần tách 
 
 ### Tài khoản test
 
-| Vai trò   | Username                                                               | Password       |
-| --------- | ---------------------------------------------------------------------- | -------------- |
-| **Admin** | `admin`                                                                | `Admin@123456` |
-| **User**  | _(đăng ký mới qua trang Sign Up, hoặc bổ sung tài khoản demo tại đây)_ |                |
+| Vai trò   | Username                          | Password       |
+| --------- | --------------------------------- | -------------- |
+| **Admin** | `admin`                           | `Admin@123456` |
+| **User**  | _(đăng ký mới qua trang Sign Up)_ |                |
 
 ---
 
